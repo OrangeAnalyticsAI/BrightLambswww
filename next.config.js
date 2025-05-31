@@ -1,24 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  // Remove standalone output for now to simplify the build
-  // output: 'standalone',
-  
   // Enable React strict mode
   reactStrictMode: true,
-  
-  // Enable SWC minification
-  swcMinify: true,
   
   // Configure images
   images: {
     domains: ['localhost'],
   },
   
+  // Enable SWC minification
+  swcMinify: true,
+  
   // Configure webpack
   webpack: (config, { isServer }) => {
-    // Important: return the modified config
+    // Add any webpack configuration here if needed
     return config;
   },
   
@@ -45,9 +40,20 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  
+  // Configure logging
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
 };
 
-// For debugging
-console.log('Next.js Config:', JSON.stringify(nextConfig, null, 2));
+// Debug configuration
+console.log('Next.js Config:', JSON.stringify({
+  ...nextConfig,
+  // Don't log the entire webpack config as it's too verbose
+  webpack: nextConfig.webpack ? '[Function]' : undefined,
+}, null, 2));
 
 module.exports = nextConfig;

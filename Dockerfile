@@ -5,13 +5,13 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Install system dependencies
-RUN apk add --no-cache libc6-compat python3 make g++
+RUN apk add --no-cache libc6-compat
 
 # Copy package files first for better caching
 COPY package.json package-lock.json* ./
 
 # Install dependencies
-RUN npm ci --verbose
+RUN npm ci
 
 # Copy the rest of the application
 COPY . .
@@ -19,11 +19,8 @@ COPY . .
 # Set environment to production
 ENV NODE_ENV=production
 
-# Create public directory if it doesn't exist
-RUN mkdir -p public
-
-# Build the application with more verbose output
-RUN npm run build --debug
+# Build the application
+RUN npm run build
 
 # Production stage
 FROM node:20-alpine
@@ -37,19 +34,11 @@ RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json* ./
 
 # Install only production dependencies
-RUN npm ci --only=production --prefer-offline
-
-# Create necessary directories
-RUN mkdir -p .next public
+RUN npm ci --only=production
 
 # Copy built assets from builder
 COPY --from=builder /app/.next ./.next
-# Only copy public directory if it exists
-RUN if [ -d "/app/public" ]; then \
-      cp -r /app/public/. ./public/; \
-    else \
-      echo "No public directory found, continuing..."; \
-    fi
+COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/next-env.d.ts ./
 
@@ -60,9 +49,9 @@ EXPOSE 3000
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Health check
+# Create a simple health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:3000/ || exit 1
 
-# Use the correct start command based on the output mode
+# Start the application
 CMD ["npm", "start"]
