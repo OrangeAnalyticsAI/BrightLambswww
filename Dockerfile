@@ -16,14 +16,8 @@ RUN npm ci
 # Copy the rest of the application
 COPY . .
 
-# Create public directory and copy from trusted-business-advisors if it exists
-RUN mkdir -p public && \
-    if [ -d "trusted-business-advisors/public" ]; then \
-      cp -r trusted-business-advisors/public/. ./public/; \
-      echo "Copied files from trusted-business-advisors/public"; \
-    else \
-      echo "No trusted-business-advisors/public directory found"; \
-    fi
+# Create public directory
+RUN mkdir -p public
 
 # Set environment to production
 ENV NODE_ENV=production
@@ -54,12 +48,17 @@ RUN mkdir -p public
 
 # Copy built assets from builder
 COPY --from=builder /app/.next ./.next
+
 # Copy public directory if it exists
-RUN if [ -d "/app/public" ]; then \
+RUN if [ -d "/app/public" ] && [ "$(ls -A /app/public)" ]; then \
       cp -r /app/public/. ./public/; \
+      echo "Copied public directory"; \
     else \
-      echo "No public directory to copy"; \
+      echo "No public directory found or directory is empty"; \
+      touch ./public/.keep; \
     fi
+
+# Copy required config files
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/next-env.d.ts ./
 
