@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start -H 0.0.0.0",
-    "lint": "next lint"
+    "build": "set NODE_OPTIONS=--max_old_space_size=4096 && next build",
+    "postbuild": "echo 'Build completed successfully' && ls -la .next/",
+    "start": "next start -H 0.0.0.0 -p $PORT",
+    "lint": "next lint",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
