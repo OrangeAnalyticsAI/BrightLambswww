@@ -3,9 +3,12 @@ const nextConfig = {
   // Enable React strict mode
   reactStrictMode: true,
   
-  // Configure images
+  // Enable static exports
+  output: 'export',
+  
+  // Disable image optimization for static export
   images: {
-    domains: ['localhost', 'aiaqbivibylyncpskxdt.supabase.co', 'sxsfevfkplihdxzeoecp.supabase.co'],
+    unoptimized: true,
   },
   
   // Enable SWC minification
@@ -23,29 +26,26 @@ const nextConfig = {
     return config;
   },
   
-  // Environment variables
-  env: {
-    // Environment variables will be loaded from .env.development or .env.production
-  },
-  
   // Configure page extensions
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
   // Configure TypeScript
   typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
+    // Allow production builds to complete with type errors
     ignoreBuildErrors: true,
   },
   
   // Configure ESLint
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
+    // Allow production builds to complete with ESLint errors
     ignoreDuringBuilds: true,
   },
+  
+  // Base path configuration (if needed for production)
+  // basePath: process.env.NODE_ENV === 'production' ? '/your-base-path' : '',
+  
+  // Asset prefix configuration (if needed for CDN)
+  // assetPrefix: process.env.NODE_ENV === 'production' ? 'https://cdn.yourdomain.com' : '',
   
   // Configure logging
   logging: {

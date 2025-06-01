@@ -4,12 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/disable-api-routes.js",
-    "build": "set NODE_OPTIONS=--max_old_space_size=4096 && next build",
-    "postbuild": "node scripts/restore-api-routes.js && echo 'Build completed successfully' && ls -la .next/",
+    "build": "next build && next export -o out",
     "start": "next start -H 0.0.0.0 -p $PORT",
-    "lint": "next lint",
-    "analyze": "ANALYZE=true next build"
+    "export": "next export -o out",
+    "lint": "next lint"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",

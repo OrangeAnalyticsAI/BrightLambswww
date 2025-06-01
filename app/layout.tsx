@@ -1,38 +1,31 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Nunito } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
-import { ClickTracker } from "./ClickTracker"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
-import SupabaseProvider from "./providers"
 
-const inter = Inter({ subsets: ["latin"] })
+const nunito = Nunito({ 
+  subsets: ["latin"],
+  weight: ['400', '700', '800'],
+  style: ['normal', 'italic']
+})
 
 export const metadata: Metadata = {
-  title: "Business Analysis Academy",
-  description: "A platform for business analysis learning and collaboration",
+  title: "Bright Lambs - Business Analysis as a Service (BAaaS)",
+  description: "Expert business analysis solutions to help your business thrive",
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const supabase = createServerComponentClient({ cookies })
-  const { data: { session } } = await supabase.auth.getSession()
-
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${nunito.className} antialiased`}>
         <TooltipProvider>
-          <SupabaseProvider session={session}>
-            <ClickTracker>
-              {children}
-              <Toaster />
-            </ClickTracker>
-          </SupabaseProvider>
+          {children}
+          <Toaster />
         </TooltipProvider>
       </body>
     </html>

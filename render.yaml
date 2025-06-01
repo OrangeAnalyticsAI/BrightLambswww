@@ -1,50 +1,9 @@
-# Development Environment
 services:
   - type: web
-    name: BAA-Dev
-    runtime: docker
-    repo: https://github.com/OrangeAnalyticsAI/BAA
-    branch: dev
-    plan: free
-    region: frankfurt
-    dockerContext: .
-    dockerfilePath: ./Dockerfile
-    autoDeploy: true
-    envVars:
-      - key: NODE_ENV
-        value: development
-      - key: PORT
-        value: 3000
-      - key: NEXT_PUBLIC_SUPABASE_URL
-        value: https://aiaqbivibylyncpskxdt.supabase.co  # Your dev Supabase URL
-      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFpYXFiaXZpYnlseW5jcHNreGR0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg3MDA1NjEsImV4cCI6MjA2NDI3NjU2MX0.EiLT7Nfl85tNaDRFbSiX-9BdEzwt1ZtYmb3T4hgUVUw  # Your dev anon key
-    healthCheckPath: /
-    healthCheckTimeout: 60s
-    buildCommand: "./render-build.sh"
-    startCommand: "npm start"
-
-# Production Environment
-  - type: web
-    name: BAA
-    runtime: docker
-    repo: https://github.com/OrangeAnalyticsAI/BAA
-    branch: main  # or master, whichever is your production branch
-    plan: free  # Consider upgrading for production
-    region: frankfurt  # or choose another region
-    dockerContext: .
-    dockerfilePath: ./Dockerfile
-    autoDeploy: true
+    name: bright-lambs
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./out
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 3000
-      - key: NEXT_PUBLIC_SUPABASE_URL
-        value: https://sxsfevfkplihdxzeoecp.supabase.co  # Your prod Supabase URL
-      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4c2ZldmZrcGxpaGR4emVvZWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MTkwMDgsImV4cCI6MjA2NDE5NTAwOH0._sRyfTjvX2vNy58L3Vi3_YK02j4CDGniU-GMRITkv4s  # Your prod anon key
-    healthCheckPath: /
-    healthCheckTimeout: 60s
-    buildCommand: "./render-build.sh"
-    startCommand: "npm start"
