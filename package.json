@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export -o out",
+    "build": "next build",
     "start": "next start -H 0.0.0.0 -p $PORT",
-    "export": "next export -o out",
-    "render-build": "npm run build",
+    "render-build": "./render-build.sh",
     "lint": "next lint"
   },
   "dependencies": {

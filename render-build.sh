@@ -14,11 +14,8 @@ npm ci
 echo "Building application..."
 npm run build
 
-# Export static site
-echo "Exporting static site..."
-npm run export
-
-# Create necessary directories
+# The static files are now in the 'out' directory
+# No need for a separate export step with Next.js 14
 mkdir -p out
 
 # Copy static files
