@@ -14,7 +14,7 @@ export interface Course {
   is_external_url?: boolean;
   duration?: string;
   content?: string;
-  instructor_id?: string;
+  contributor_id?: string;
   status?: 'draft' | 'published' | 'archived';
   price?: number;
   rating?: number;

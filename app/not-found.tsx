@@ -1,18 +1,36 @@
-import Link from 'next/link'
+import Link from 'next/link';
+import Image from 'next/image';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full space-y-4 p-8 bg-white rounded-lg shadow text-center">
-        <h2 className="text-2xl font-bold text-gray-800">404 - Page Not Found</h2>
-        <p className="text-gray-600">The page you're looking for doesn't exist or has been moved.</p>
-        <Link 
-          href="/" 
-          className="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Return Home
-        </Link>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 to-blue-50 p-4">
+      <div className="max-w-2xl w-full space-y-6 p-8 bg-white rounded-2xl shadow-xl text-center">
+        <h2 className="text-3xl font-bold text-gray-800">Baa-d News!</h2>
+        <div className="flex justify-center my-4">
+          <div className="relative w-[19.2rem] h-[19.2rem]">
+            <Image
+              src="/Bad_construction_sheep.jpg"
+              alt="Sheep in a hard hat"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-contain"
+              priority
+            />
+          </div>
+        </div>
+        <p className="text-lg text-gray-600">
+          Jen hasn't finished building this.<br />
+          So flock off back to the home page.
+        </p>
+        <div className="pt-4">
+          <Link 
+            href="/" 
+            className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
+          >
+            Runaway Home
+          </Link>
+        </div>
       </div>
     </div>
-  )
+  );
 }

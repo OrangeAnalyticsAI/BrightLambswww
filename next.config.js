@@ -5,7 +5,7 @@ const nextConfig = {
   
   // Configure images
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'aiaqbivibylyncpskxdt.supabase.co', 'sxsfevfkplihdxzeoecp.supabase.co'],
   },
   
   // Enable SWC minification
@@ -19,7 +19,7 @@ const nextConfig = {
   
   // Environment variables
   env: {
-    // Add any environment variables you need at build time
+    // Environment variables will be loaded from .env.development or .env.production
   },
   
   // Configure page extensions
@@ -46,6 +46,12 @@ const nextConfig = {
     fetches: {
       fullUrl: true,
     },
+  },
+  
+  // Enable environment variable loading from .env.local, .env.development, .env.production, .env.test
+  env: {
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
 };
 

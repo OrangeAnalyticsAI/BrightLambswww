@@ -4,14 +4,6 @@ services:
     env: docker
     build:
       dockerfile: Dockerfile
-    envVars:
-      - key: NODE_ENV
-        value: production
-      # Add other environment variables here from your .env.local file
-      # - key: NEXT_PUBLIC_SUPABASE_URL
-      #   value: your-supabase-url
-      # - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-      #   value: your-supabase-anon-key
     plan: free
     autoDeploy: true
     envVars:
@@ -19,4 +11,8 @@ services:
         value: production
       - key: PORT
         value: 3000
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        value: https://sxsfevfkplihdxzeoecp.supabase.co
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4c2ZldmZrcGxpaGR4emVvZWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MTkwMDgsImV4cCI6MjA2NDE5NTAwOH0._sRyfTjvX2vNy58L3Vi3_YK02j4CDGniU-GMRITkv4s
     healthCheckPath: /

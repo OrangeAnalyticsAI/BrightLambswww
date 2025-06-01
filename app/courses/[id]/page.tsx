@@ -58,7 +58,7 @@ export default function CourseDetailPage() {
           .eq('id', user.id)
           .single();
 
-        setIsInstructor(profile?.user_type === 'instructor' || profile?.user_type === 'admin');
+        setIsInstructor(profile?.user_type === 'contributor' || profile?.user_type === 'admin');
 
         // Fetch user progress
         const { data: progress } = await supabase

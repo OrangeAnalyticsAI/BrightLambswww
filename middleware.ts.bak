@@ -1,0 +1,116 @@
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { NextResponse, type NextRequest } from 'next/server'
+
+const protectedRoutes = ['/bleat/new']
+const authRoutes = ['/auth']
+
+export async function middleware(request: NextRequest) {
+  console.log(`[Middleware] Processing request for: ${request.nextUrl.pathname}`);
+  
+  let response = NextResponse.next({
+    request: {
+      headers: request.headers,
+    },
+  });
+
+  try {
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          get(name: string) {
+            const value = request.cookies.get(name)?.value;
+            console.log(`[Middleware] Getting cookie ${name}: ${value ? 'exists' : 'not found'}`);
+            return value;
+          },
+          set(name: string, value: string, options: CookieOptions) {
+            console.log(`[Middleware] Setting cookie ${name}`);
+            request.cookies.set({
+              name,
+              value,
+              ...options,
+            });
+            response = NextResponse.next({
+              request: {
+                headers: request.headers,
+              },
+            });
+            response.cookies.set({
+              name,
+              value,
+              ...options,
+            });
+          },
+          remove(name: string, options: CookieOptions) {
+            console.log(`[Middleware] Removing cookie ${name}`);
+            request.cookies.set({
+              name,
+              value: '',
+              ...options,
+            });
+            response = NextResponse.next({
+              request: {
+                headers: request.headers,
+              },
+            });
+            response.cookies.set({
+              name,
+              value: '',
+              ...options,
+            });
+          },
+        },
+      }
+    );
+
+    // Get the user's session
+    console.log('[Middleware] Getting session...');
+    const { data: { session }, error } = await supabase.auth.getSession();
+    
+    if (error) {
+      console.error('[Middleware] Error getting session:', error);
+    } else {
+      console.log(`[Middleware] Session status: ${session ? 'Authenticated' : 'No session'}`);
+    }
+    
+    const { pathname } = request.nextUrl;
+    console.log(`[Middleware] Path: ${pathname}`);
+
+    // If user is not signed in and the current path is protected, redirect to auth page
+    if (!session && protectedRoutes.some(route => pathname.startsWith(route))) {
+      console.log(`[Middleware] Unauthorized access to protected route: ${pathname}`);
+      const redirectUrl = new URL('/auth', request.url);
+      redirectUrl.searchParams.set('redirectedFrom', pathname);
+      console.log(`[Middleware] Redirecting to: ${redirectUrl.toString()}`);
+      return NextResponse.redirect(redirectUrl);
+    }
+
+    // If user is signed in and the current path is /auth, redirect to home or the redirect URL
+    if (session && pathname === '/auth') {
+      const redirectTo = request.nextUrl.searchParams.get('redirectedFrom') || '/';
+      console.log(`[Middleware] Already authenticated, redirecting to: ${redirectTo}`);
+      return NextResponse.redirect(new URL(redirectTo, request.url));
+    }
+
+    console.log('[Middleware] Allowing request to proceed');
+    return response;
+    
+  } catch (error) {
+    console.error('[Middleware] Error:', error);
+    // In case of error, allow the request to proceed but log the error
+    return response;
+  }
+}
+
+export const config = {
+  // Match all request paths except for the ones starting with:
+  // - api (API routes)
+  // - _next/static (static files)
+  // - _next/image (image optimization files)
+  // - favicon.ico (favicon file)
+  // - public folder
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
+}
