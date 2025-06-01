@@ -2,6 +2,7 @@ services:
   - type: web
     name: bright-lambs
     env: static
+    rootDirectory: .
     buildCommand: npm install && npm run build
     staticPublishPath: ./out
     envVars:
