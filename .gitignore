@@ -8,3 +8,4 @@ out
 *.pem
 yarn-debug.log*
 yarn-error.log*
+windsurf-supabase-mcp/
