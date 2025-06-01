@@ -1,6 +1,11 @@
 #!/bin/bash
 set -o errexit
 
+# Print current directory and contents for debugging
+echo "Current directory: $(pwd)"
+echo "Directory contents:"
+ls -la
+
 # Install dependencies
 echo "Installing dependencies..."
 npm ci
