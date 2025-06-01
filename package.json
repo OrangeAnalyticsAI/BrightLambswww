@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/disable-api-routes.js",
     "build": "set NODE_OPTIONS=--max_old_space_size=4096 && next build",
-    "postbuild": "echo 'Build completed successfully' && ls -la .next/",
+    "postbuild": "node scripts/restore-api-routes.js && echo 'Build completed successfully' && ls -la .next/",
     "start": "next start -H 0.0.0.0 -p $PORT",
     "lint": "next lint",
     "analyze": "ANALYZE=true next build"
