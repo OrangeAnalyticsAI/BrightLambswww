@@ -3,6 +3,8 @@ import { Nunito } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import { TooltipProvider } from "@/components/ui/tooltip"
+import Navigation from "@/app/components/Navigation"
+import Footer from "@/app/components/Footer"
 
 const nunito = Nunito({ 
   subsets: ["latin"],
@@ -22,9 +24,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${nunito.className} antialiased`}>
+      <body className={`${nunito.className} antialiased flex flex-col min-h-screen`}>
         <TooltipProvider>
-          {children}
+          <Navigation />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
           <Toaster />
         </TooltipProvider>
       </body>
