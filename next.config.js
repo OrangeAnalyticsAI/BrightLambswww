@@ -14,18 +14,6 @@ const nextConfig = {
   // Enable SWC minification
   swcMinify: true,
   
-  // Configure webpack
-  webpack: (config, { isServer, dev }) => {
-    // Skip building API routes during the build phase
-    if (!dev && isServer) {
-      config.experiments = {
-        ...config.experiments,
-        topLevelAwait: true,
-      };
-    }
-    return config;
-  },
-  
   // Configure page extensions
   pageExtensions: ['tsx', 'ts', 'jsx', 'js'],
   
@@ -40,12 +28,6 @@ const nextConfig = {
     // Allow production builds to complete with ESLint errors
     ignoreDuringBuilds: true,
   },
-  
-  // Base path configuration (if needed for production)
-  // basePath: process.env.NODE_ENV === 'production' ? '/your-base-path' : '',
-  
-  // Asset prefix configuration (if needed for CDN)
-  // assetPrefix: process.env.NODE_ENV === 'production' ? 'https://cdn.yourdomain.com' : '',
   
   // Configure logging
   logging: {
