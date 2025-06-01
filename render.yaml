@@ -2,9 +2,10 @@ services:
   - type: web
     name: business-analysis-academy
     env: docker
+    region: london  # Choose the closest region to your users
     build:
       dockerfile: Dockerfile
-    plan: free
+    plan: free  # Or 'starter' if you need more resources
     autoDeploy: true
     envVars:
       - key: NODE_ENV
@@ -12,7 +13,16 @@ services:
       - key: PORT
         value: 3000
       - key: NEXT_PUBLIC_SUPABASE_URL
-        value: https://sxsfevfkplihdxzeoecp.supabase.co
+        fromService:
+          name: business-analysis-academy
+          type: web
+          property: env.NEXT_PUBLIC_SUPABASE_URL
       - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN4c2ZldmZrcGxpaGR4emVvZWNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2MTkwMDgsImV4cCI6MjA2NDE5NTAwOH0._sRyfTjvX2vNy58L3Vi3_YK02j4CDGniU-GMRITkv4s
+        fromService:
+          name: business-analysis-academy
+          type: web
+          property: env.NEXT_PUBLIC_SUPABASE_ANON_KEY
     healthCheckPath: /
+    healthCheckTimeout: 60s
+    buildCommand: "./render-build.sh"
+    startCommand: "npm start"

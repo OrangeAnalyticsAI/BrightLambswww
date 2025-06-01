@@ -13,6 +13,9 @@ COPY package.json package-lock.json* ./
 # Install dependencies
 RUN npm ci
 
+# Copy environment variables (including .env*)
+COPY .env* ./
+
 # Copy the rest of the application
 COPY . .
 
@@ -22,6 +25,12 @@ RUN mkdir -p public
 # Set environment to production
 ENV NODE_ENV=production
 
+# Make sure environment variables are available during build
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
+
 # Build the application
 RUN npm run build
 
@@ -30,7 +39,7 @@ RUN ls -la .next/
 RUN ls -la public/ || echo "No public directory found"
 
 # Production stage
-FROM node:20-alpine
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 
@@ -43,21 +52,10 @@ COPY package.json package-lock.json* ./
 # Install only production dependencies
 RUN npm ci --only=production
 
-# Create necessary directories
-RUN mkdir -p public
-
 # Copy built assets from builder
 COPY --from=builder /app/.next ./.next
-
-# Copy public directory if it exists
-RUN if [ -d "/app/public" ] && [ "$(ls -A /app/public)" ]; then \
-      cp -r /app/public/. ./public/; \
-      echo "Copied public directory"; \
-    else \
-      echo "No public directory found or directory is empty"; \
-      touch ./public/.keep; \
-    fi
-
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/package.json ./package.json
 # Copy required config files
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/next-env.d.ts ./
