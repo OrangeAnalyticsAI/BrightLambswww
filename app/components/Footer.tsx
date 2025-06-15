@@ -6,7 +6,10 @@ export default function Footer() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4">Bright Lambs</h3>
+            <h3 className="text-xl font-bold mb-4 font-baloo2">
+              <span className="text-pink-700">Bright</span>{' '}
+              <span className="text-orange-500">Lambs</span>
+            </h3>
             <p className="text-gray-400">Business Analysis as a Service (BAaaS) helping businesses make data-driven decisions.</p>
           </div>
           <div>
@@ -22,7 +25,6 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
               <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
               <li><Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="/terms" className="text-gray-400 hover:text-white transition-colors">Terms of Service</Link></li>
             </ul>
@@ -46,7 +48,10 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Bright Lambs. All rights reserved.</p>
+          <p className="font-baloo2">
+            &copy; {new Date().getFullYear()} <span className="text-pink-700">Bright</span>{' '}
+            <span className="text-orange-500">Lambs</span>. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

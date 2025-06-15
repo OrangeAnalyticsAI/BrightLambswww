@@ -6,7 +6,11 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        baloo2: ['Baloo 2', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

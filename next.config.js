@@ -3,12 +3,13 @@ const nextConfig = {
   // Enable React strict mode
   reactStrictMode: true,
   
-  // Enable static exports
-  output: 'export',
+  // Only enable static exports in production
+  output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
   
   // Disable image optimization for static export
   images: {
-    unoptimized: true,
+    unoptimized: process.env.NODE_ENV === 'production',
+    domains: ['localhost'],
   },
   
   // Enable SWC minification
