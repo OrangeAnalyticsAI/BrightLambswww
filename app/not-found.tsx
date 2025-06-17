@@ -19,15 +19,15 @@ export default function NotFound() {
           </div>
         </div>
         <p className="text-lg text-gray-600">
-          Jen hasn't finished building this.<br />
-          So flock off back to the home page.
+          Sorry, this page isn't ready yet.<br />
+          We're working hard to bring you great content. Please check back soon!
         </p>
         <div className="pt-4">
           <Link 
             href="/" 
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
           >
-            Runaway Home
+Return to Homepage
           </Link>
         </div>
       </div>
