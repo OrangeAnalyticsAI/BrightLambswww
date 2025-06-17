@@ -1,0 +1,43 @@
+# Dependencies
+node_modules
+.next/cache
+
+# Build output
+out
+
+# Environment files
+.env*
+!.env.example
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local development
+.DS_Store
+
+# IDE specific files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Exclude trusted-business-advisors directory
+trusted-business-advisors/**
+
+# Include only necessary files
+!public/
+!app/
+!public/
+!package.json
+!next.config.js
+!nginx.conf
+!Dockerfile
+!package-lock.json
+!tsconfig.json
+!tailwind.config.js
+!postcss.config.js

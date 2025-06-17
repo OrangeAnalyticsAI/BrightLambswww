@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: bright-lambs
+    env: static
+    buildCommand: chmod +x ./render-build.sh && ./render-build.sh
+    staticPublishPath: ./out
+    envVars:
+      - key: NODE_ENV
+        value: production
