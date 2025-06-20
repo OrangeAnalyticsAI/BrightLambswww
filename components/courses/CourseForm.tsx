@@ -15,12 +15,12 @@ interface CourseFormProps {
   onCancel: () => void;
 }
 
-export function CourseForm({ 
-  categories, 
-  initialData = {}, 
-  onSubmit, 
-  isSubmitting, 
-  onCancel 
+export function CourseForm({
+  categories,
+  initialData = {},
+  onSubmit,
+  isSubmitting,
+  onCancel,
 }: CourseFormProps) {
   const [formData, setFormData] = useState({
     title: initialData.title || '',
@@ -32,22 +32,24 @@ export function CourseForm({
   const [newCategory, setNewCategory] = useState('');
   const [showNewCategory, setShowNewCategory] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value, type } = e.target as HTMLInputElement;
     const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
-    
-    setFormData(prev => ({
+
+    setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
   const handleCategoryChange = (categoryId: string) => {
-    setFormData(prev => {
+    setFormData((prev) => {
       const newCategories = prev.categories.includes(categoryId)
-        ? prev.categories.filter(id => id !== categoryId)
+        ? prev.categories.filter((id) => id !== categoryId)
         : [...prev.categories, categoryId];
-      
+
       return {
         ...prev,
         categories: newCategories,
@@ -56,9 +58,9 @@ export function CourseForm({
   };
 
   const handleAddNewCategory = () => {
-    if (newCategory.trim() && !categories.some(cat => cat.id === newCategory.toLowerCase())) {
+    if (newCategory.trim() && !categories.some((cat) => cat.id === newCategory.toLowerCase())) {
       const newCatId = newCategory.toLowerCase().replace(/\s+/g, '-');
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         categories: [...prev.categories, newCatId],
       }));
@@ -135,10 +137,10 @@ export function CourseForm({
           {formData.thumbnail_url && (
             <div className="mt-2">
               <p className="text-xs text-gray-500">Preview:</p>
-              <img 
-                src={formData.thumbnail_url} 
-                alt="Thumbnail preview" 
-                className="mt-1 h-32 w-auto object-cover rounded"
+              <img
+                src={formData.thumbnail_url}
+                alt="Thumbnail preview"
+                className="mt-1 h-32 w-auto rounded object-cover"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -150,7 +152,7 @@ export function CourseForm({
 
         {/* Categories */}
         <div>
-          <span className="block text-sm font-medium text-gray-700 mb-2">Categories</span>
+          <span className="mb-2 block text-sm font-medium text-gray-700">Categories</span>
           <div className="space-y-2">
             {categories.map((category) => (
               <div key={category.id} className="flex items-center">
@@ -162,14 +164,17 @@ export function CourseForm({
                   onChange={() => handleCategoryChange(category.id)}
                   className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                 />
-                <label htmlFor={`category-${category.id}`} className="ml-2 block text-sm text-gray-700">
+                <label
+                  htmlFor={`category-${category.id}`}
+                  className="ml-2 block text-sm text-gray-700"
+                >
                   {category.name}
                 </label>
               </div>
             ))}
-            
+
             {showNewCategory ? (
-              <div className="flex items-center mt-2">
+              <div className="mt-2 flex items-center">
                 <input
                   type="text"
                   value={newCategory}
@@ -180,7 +185,7 @@ export function CourseForm({
                 <button
                   type="button"
                   onClick={handleAddNewCategory}
-                  className="ml-2 inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="ml-2 inline-flex items-center rounded-md border border-transparent bg-blue-600 px-3 py-2 text-sm font-medium leading-4 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   Add
                 </button>
@@ -198,7 +203,7 @@ export function CourseForm({
                 onClick={() => setShowNewCategory(true)}
                 className="mt-2 inline-flex items-center text-sm text-blue-600 hover:text-blue-500"
               >
-                <PlusIcon className="h-4 w-4 mr-1" />
+                <PlusIcon className="mr-1 h-4 w-4" />
                 Add new category
               </button>
             )}
@@ -226,14 +231,14 @@ export function CourseForm({
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? 'Saving...' : 'Save Course'}
           </button>

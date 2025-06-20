@@ -25,34 +25,34 @@ async function main() {
 
     // 1. Create storage buckets if they don't exist
     console.log('Creating storage buckets...');
-    
+
     // Create default avatars bucket (public)
     const { data: defaultBucket, error: defaultBucketError } = await supabase.storage.createBucket(
-      'default_avatars', 
+      'default_avatars',
       { public: true }
     );
-    
+
     if (defaultBucketError && !defaultBucketError.message.includes('already exists')) {
       throw defaultBucketError;
     }
-    
+
     console.log('Default avatars bucket created or already exists');
-    
+
     // Create user avatars bucket (private)
     const { data: userBucket, error: userBucketError } = await supabase.storage.createBucket(
-      'user_avatars', 
+      'user_avatars',
       { public: false }
     );
-    
+
     if (userBucketError && !userBucketError.message.includes('already exists')) {
       throw userBucketError;
     }
-    
+
     console.log('User avatars bucket created or already exists');
 
     // 2. Set up storage policies
     console.log('Setting up storage policies...');
-    
+
     // Run the migration SQL directly
     const { error: policyError } = await supabase.rpc('pg_execute', {
       query: `
@@ -103,9 +103,9 @@ async function main() {
           bucket_id = 'user_avatars' 
           AND (storage.foldername(name))[1] = auth.uid()::text
         );
-      `
+      `,
     });
-    
+
     if (policyError) {
       console.warn('Warning: Policies may have partially succeeded:', policyError.message);
     } else {
@@ -114,24 +114,24 @@ async function main() {
 
     // 3. Upload default avatars
     console.log('Uploading default avatars...');
-    
+
     const defaultAvatarsDir = path.join(__dirname, '..', 'public', 'images', 'default-avatars');
     const files = fs.readdirSync(defaultAvatarsDir);
-    
+
     for (const file of files) {
       if (file.endsWith('.png') || file.endsWith('.jpg') || file.endsWith('.jpeg')) {
         const filePath = path.join(defaultAvatarsDir, file);
         const fileContent = fs.readFileSync(filePath);
-        
+
         console.log(`Uploading ${file}...`);
-        
+
         const { error: uploadError } = await supabase.storage
           .from('default_avatars')
           .upload(file, fileContent, {
             contentType: file.endsWith('.png') ? 'image/png' : 'image/jpeg',
-            upsert: true
+            upsert: true,
           });
-        
+
         if (uploadError) {
           console.warn(`Warning: Failed to upload ${file}:`, uploadError.message);
         } else {

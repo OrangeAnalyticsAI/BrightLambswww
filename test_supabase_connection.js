@@ -1,7 +1,7 @@
 // This is a temporary script to test Supabase connection and a simple read operation.
 
 // Adjust the path if your supabase client is located elsewhere.
-const { supabase } = require('./lib/supabase'); 
+const { supabase } = require('./lib/supabase');
 
 async function testSupabaseRead() {
   console.log('Attempting to connect to Supabase and read from "profiles" table...');
@@ -14,8 +14,12 @@ async function testSupabaseRead() {
       console.error('Supabase URL or Anon Key is not defined in process.env.');
       console.log('NEXT_PUBLIC_SUPABASE_URL:', process.env.NEXT_PUBLIC_SUPABASE_URL);
       console.log('NEXT_PUBLIC_SUPABASE_ANON_KEY:', process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
-      console.error('Please ensure your .env.development or .env.local file is correctly set up and accessible by this script.');
-      console.error('You might need to use a library like dotenv if running this script directly with Node.js outside of Next.js, e.g., `node -r dotenv/config test_supabase_connection.js` after installing dotenv (`npm install dotenv`).');
+      console.error(
+        'Please ensure your .env.development or .env.local file is correctly set up and accessible by this script.'
+      );
+      console.error(
+        'You might need to use a library like dotenv if running this script directly with Node.js outside of Next.js, e.g., `node -r dotenv/config test_supabase_connection.js` after installing dotenv (`npm install dotenv`).'
+      );
       return;
     }
 
@@ -23,8 +27,8 @@ async function testSupabaseRead() {
 
     const { data, error } = await supabase
       .from('profiles') // Using the 'profiles' table
-      .select('*')    // Select all columns
-      .limit(1);       // Limit to 1 record for a quick test
+      .select('*') // Select all columns
+      .limit(1); // Limit to 1 record for a quick test
 
     if (error) {
       console.error('Error fetching data from Supabase:', error.message);
@@ -41,7 +45,6 @@ async function testSupabaseRead() {
     } else {
       console.log('Query executed, but no data object was returned. This might indicate an issue.');
     }
-
   } catch (e) {
     console.error('An unexpected error occurred during the test:', e);
   }

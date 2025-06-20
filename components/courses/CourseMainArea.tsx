@@ -30,10 +30,10 @@ export function CourseMainArea({
 
   if (courses.length === 0) {
     return (
-      <NoCoursesFound 
-        searchQuery={searchQuery} 
-        selectedCategory={selectedCategory} 
-        isInstructor={isInstructor} 
+      <NoCoursesFound
+        searchQuery={searchQuery}
+        selectedCategory={selectedCategory}
+        isInstructor={isInstructor}
       />
     );
   }
@@ -42,10 +42,9 @@ export function CourseMainArea({
     <div className="lg:col-span-3">
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900">
-          {selectedCategory === 'all' 
-            ? 'All Courses' 
-            : `Category: ${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1).replace('-', ' ')}`
-          }
+          {selectedCategory === 'all'
+            ? 'All Courses'
+            : `Category: ${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1).replace('-', ' ')}`}
         </h2>
         <p className="mt-1 text-sm text-gray-500">
           {courses.length} {courses.length === 1 ? 'course' : 'courses'} found
@@ -54,9 +53,9 @@ export function CourseMainArea({
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {courses.map((course) => (
-          <CourseCard 
-            key={course.id} 
-            course={course} 
+          <CourseCard
+            key={course.id}
+            course={course}
             isInstructor={isInstructor}
             onCourseDeleted={onCourseDeleted}
           />

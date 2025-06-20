@@ -35,15 +35,15 @@ export function ServiceCard({ service }: { service: Service }) {
   };
 
   const renderShimmer = (isHoverShimmer = false) => (
-    <motion.div 
-      className="absolute inset-0 overflow-hidden pointer-events-none z-10"
+    <motion.div
+      className="pointer-events-none absolute inset-0 z-10 overflow-hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0.5 }}
       transition={{ duration: 0.3 }}
       key={isHoverShimmer ? 'hover' : 'initial'}
     >
-      <motion.div 
+      <motion.div
         className="absolute inset-0"
         style={{
           background: `linear-gradient(
@@ -54,21 +54,21 @@ export function ServiceCard({ service }: { service: Service }) {
             rgba(255, 255, 255, 0.5) 75%,
             rgba(255, 255, 255, 0) 100%
           )`,
-          filter: 'blur(8px)'
+          filter: 'blur(8px)',
         }}
-        initial={{ 
-          x: '-100%', 
+        initial={{
+          x: '-100%',
           y: '-100%',
           rotate: '-20deg',
-          scale: 1.5
+          scale: 1.5,
         }}
         animate={{
           x: '200%',
           y: '200%',
           transition: {
             duration: 1.5,
-            ease: [0.4, 0, 0.2, 1]
-          }
+            ease: [0.4, 0, 0.2, 1],
+          },
         }}
         onAnimationComplete={() => {
           if (isHoverShimmer) {
@@ -89,61 +89,64 @@ export function ServiceCard({ service }: { service: Service }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="relative group"
+      className="group relative"
       onHoverStart={handleHoverStart}
       onHoverEnd={handleHoverEnd}
     >
       <Link href={`/services/${service.slug}`}>
-        <div 
-          className={`relative h-full backdrop-blur-lg rounded-2xl p-6 border-2 overflow-hidden transition-all duration-300 shadow-lg dark:shadow-[0_4px_20px_0_rgba(0,0,0,0.5)] ${
-            isHovered 
-              ? 'bg-gradient-to-br from-pink-50/90 to-pink-100/90 dark:from-pink-900/30 dark:to-pink-900/40 border-pink-300 dark:border-pink-800/70 scale-[1.02]' 
-              : 'bg-white/80 dark:bg-gray-900/80 border-gray-200 dark:border-gray-700/70'
+        <div
+          className={`relative h-full overflow-hidden rounded-2xl border-2 p-6 shadow-lg backdrop-blur-lg transition-all duration-300 dark:shadow-[0_4px_20px_0_rgba(0,0,0,0.5)] ${
+            isHovered
+              ? 'scale-[1.02] border-pink-300 bg-gradient-to-br from-pink-50/90 to-pink-100/90 dark:border-pink-800/70 dark:from-pink-900/30 dark:to-pink-900/40'
+              : 'border-gray-200 bg-white/80 dark:border-gray-700/70 dark:bg-gray-900/80'
           }`}
         >
           {/* Initial Shimmer Effect */}
-          <AnimatePresence>
-            {showInitialShimmer && renderShimmer(false)}
-          </AnimatePresence>
-          
+          <AnimatePresence>{showInitialShimmer && renderShimmer(false)}</AnimatePresence>
+
           {/* Hover Shimmer Effect */}
-          <AnimatePresence>
-            {showHoverShimmer && renderShimmer(true)}
-          </AnimatePresence>
-          
+          <AnimatePresence>{showHoverShimmer && renderShimmer(true)}</AnimatePresence>
+
           {/* Content */}
           <div className="relative z-0">
-            <motion.h3 
-              className={`text-xl font-bold mb-3 transition-colors duration-300 ${
+            <motion.h3
+              className={`mb-3 text-xl font-bold transition-colors duration-300 ${
                 isHovered ? 'text-pink-600 dark:text-pink-400' : 'text-gray-900 dark:text-white'
               }`}
             >
               {service.title}
             </motion.h3>
-            <motion.p 
+            <motion.p
               className={`transition-colors duration-300 ${
                 isHovered ? 'text-gray-900 dark:text-gray-100' : 'text-gray-700 dark:text-gray-300'
               }`}
             >
               {service.description}
             </motion.p>
-            
-            <div 
+
+            <div
               className={`mt-4 flex items-center transition-colors duration-300 ${
-                isHovered ? 'text-pink-600 dark:text-pink-400' : 'text-pink-500 dark:text-pink-500/70'
+                isHovered
+                  ? 'text-pink-600 dark:text-pink-400'
+                  : 'text-pink-500 dark:text-pink-500/70'
               }`}
             >
               <span className="mr-2">Learn more</span>
-              <motion.svg 
-                className="w-4 h-4"
-                fill="none" 
-                stroke="currentColor" 
+              <motion.svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
                 viewBox="0 0 24 24"
                 initial={{ x: 0 }}
                 whileHover={{ x: 4 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 15 }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
               </motion.svg>
             </div>
           </div>

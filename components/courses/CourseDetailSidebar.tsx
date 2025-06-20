@@ -1,12 +1,12 @@
 import React from 'react';
 import { Course } from './types';
-import { 
-  HomeIcon, 
-  BookOpenIcon, 
-  DocumentTextIcon, 
+import {
+  HomeIcon,
+  BookOpenIcon,
+  DocumentTextIcon,
   ChatBubbleLeftRightIcon,
   CheckCircleIcon,
-  LockClosedIcon
+  LockClosedIcon,
 } from '@heroicons/react/24/outline';
 
 interface CourseDetailSidebarProps {
@@ -32,8 +32,18 @@ export function CourseDetailSidebar({
       duration: '45 min',
       lessons: [
         { id: 'lesson-1', title: 'What is Business Analysis?', duration: '15 min', locked: false },
-        { id: 'lesson-2', title: 'The Role of a Business Analyst', duration: '15 min', locked: false },
-        { id: 'lesson-3', title: 'Key Concepts and Terminologies', duration: '15 min', locked: false },
+        {
+          id: 'lesson-2',
+          title: 'The Role of a Business Analyst',
+          duration: '15 min',
+          locked: false,
+        },
+        {
+          id: 'lesson-3',
+          title: 'Key Concepts and Terminologies',
+          duration: '15 min',
+          locked: false,
+        },
       ],
     },
     {
@@ -42,10 +52,30 @@ export function CourseDetailSidebar({
       duration: '1h 30min',
       locked: course.is_premium,
       lessons: [
-        { id: 'lesson-4', title: 'Types of Requirements', duration: '20 min', locked: course.is_premium },
-        { id: 'lesson-5', title: 'Requirements Elicitation Techniques', duration: '25 min', locked: course.is_premium },
-        { id: 'lesson-6', title: 'Documenting Requirements', duration: '25 min', locked: course.is_premium },
-        { id: 'lesson-7', title: 'Requirements Validation', duration: '20 min', locked: course.is_premium },
+        {
+          id: 'lesson-4',
+          title: 'Types of Requirements',
+          duration: '20 min',
+          locked: course.is_premium,
+        },
+        {
+          id: 'lesson-5',
+          title: 'Requirements Elicitation Techniques',
+          duration: '25 min',
+          locked: course.is_premium,
+        },
+        {
+          id: 'lesson-6',
+          title: 'Documenting Requirements',
+          duration: '25 min',
+          locked: course.is_premium,
+        },
+        {
+          id: 'lesson-7',
+          title: 'Requirements Validation',
+          duration: '20 min',
+          locked: course.is_premium,
+        },
       ],
     },
   ];
@@ -64,40 +94,39 @@ export function CourseDetailSidebar({
   return (
     <div className="space-y-6">
       {/* Progress */}
-      <div className="bg-white p-4 rounded-lg shadow">
-        <h3 className="text-sm font-medium text-gray-500 mb-2">COURSE PROGRESS</h3>
+      <div className="rounded-lg bg-white p-4 shadow">
+        <h3 className="mb-2 text-sm font-medium text-gray-500">COURSE PROGRESS</h3>
         <div className="mt-2">
-          <div className="flex justify-between text-sm text-gray-500 mb-1">
+          <div className="mb-1 flex justify-between text-sm text-gray-500">
             <span>{progress}% Complete</span>
-            <span>{completedCount} of {totalLessons} lessons</span>
+            <span>
+              {completedCount} of {totalLessons} lessons
+            </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2.5">
-            <div 
-              className="bg-blue-600 h-2.5 rounded-full" 
-              style={{ width: `${progress}%` }}
-            ></div>
+          <div className="h-2.5 w-full rounded-full bg-gray-200">
+            <div className="h-2.5 rounded-full bg-blue-600" style={{ width: `${progress}%` }}></div>
           </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="overflow-hidden rounded-lg bg-white shadow">
         <nav className="space-y-1">
           {navigation.map((item) => (
             <button
               key={item.name}
               onClick={() => onSectionChange(item.section)}
-              className={`w-full text-left px-4 py-3 text-sm font-medium flex items-center ${
+              className={`flex w-full items-center px-4 py-3 text-left text-sm font-medium ${
                 activeSection === item.section
-                  ? 'bg-blue-50 text-blue-700 border-l-4 border-blue-700'
-                  : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 border-l-4 border-transparent'
+                  ? 'border-l-4 border-blue-700 bg-blue-50 text-blue-700'
+                  : 'border-l-4 border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900'
               }`}
             >
-              <item.icon 
+              <item.icon
                 className={`mr-3 h-5 w-5 ${
                   activeSection === item.section ? 'text-blue-500' : 'text-gray-400'
-                }`} 
-                aria-hidden="true" 
+                }`}
+                aria-hidden="true"
               />
               {item.name}
             </button>
@@ -106,8 +135,8 @@ export function CourseDetailSidebar({
       </div>
 
       {/* Course Content */}
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="px-4 py-3 border-b border-gray-200">
+      <div className="overflow-hidden rounded-lg bg-white shadow">
+        <div className="border-b border-gray-200 px-4 py-3">
           <h3 className="text-sm font-medium text-gray-900">Course Content</h3>
         </div>
         <div className="divide-y divide-gray-200">
@@ -121,7 +150,7 @@ export function CourseDetailSidebar({
               </div>
               {module.locked && (
                 <div className="mt-2 flex items-center text-xs text-gray-500">
-                  <LockClosedIcon className="h-3 w-3 mr-1" />
+                  <LockClosedIcon className="mr-1 h-3 w-3" />
                   <span>Premium Content</span>
                 </div>
               )}
@@ -131,27 +160,27 @@ export function CourseDetailSidebar({
                     <button
                       onClick={() => !lesson.locked && onLessonComplete(lesson.id)}
                       disabled={lesson.locked}
-                      className={`flex-shrink-0 mt-1 h-4 w-4 ${
+                      className={`mt-1 h-4 w-4 flex-shrink-0 ${
                         completedLessons.includes(lesson.id)
                           ? 'text-green-500'
                           : lesson.locked
-                          ? 'text-gray-300 cursor-not-allowed'
-                          : 'text-gray-300 hover:text-gray-400'
+                            ? 'cursor-not-allowed text-gray-300'
+                            : 'text-gray-300 hover:text-gray-400'
                       }`}
                     >
                       {completedLessons.includes(lesson.id) ? (
                         <CheckCircleIcon className="h-4 w-4" />
                       ) : (
-                        <div className="h-3 w-3 border-2 border-gray-300 rounded-full" />
+                        <div className="h-3 w-3 rounded-full border-2 border-gray-300" />
                       )}
                     </button>
-                    <span 
+                    <span
                       className={`ml-2 text-sm ${
                         completedLessons.includes(lesson.id)
-                          ? 'text-green-600 font-medium'
+                          ? 'font-medium text-green-600'
                           : lesson.locked
-                          ? 'text-gray-400'
-                          : 'text-gray-600'
+                            ? 'text-gray-400'
+                            : 'text-gray-600'
                       }`}
                     >
                       {lesson.title}

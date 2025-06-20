@@ -6,7 +6,7 @@ import HeroSection from '../../components/HeroSection';
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
+    <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
       <HeroSection
         title="Clarity over the complex."
         highlight="Certainty in what comes next."
@@ -15,13 +15,13 @@ export default function ServicesPage() {
       />
 
       {/* Services Grid */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-3">Our Services</h2>
-            <div className="w-20 h-1 bg-blue-600 mx-auto"></div>
+      <section className="bg-gray-50 px-4 py-16 dark:bg-gray-900 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-12 text-center">
+            <h2 className="mb-3 text-3xl font-bold text-gray-900 dark:text-white">Our Services</h2>
+            <div className="mx-auto h-1 w-20 bg-blue-600"></div>
           </div>
-          
+
           <ServicesGrid services={services} />
         </div>
       </section>

@@ -15,32 +15,28 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <div className="relative group">
-        <div className="absolute -inset-0.5 rounded-lg overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 animate-gradient-rotate opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="group relative">
+        <div className="absolute -inset-0.5 overflow-hidden rounded-lg">
+          <div className="animate-gradient-rotate absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
         </div>
-        <button className="relative p-2 rounded-md bg-transparent focus:outline-none">
-          <div className="w-5 h-5" />
+        <button className="relative rounded-md bg-transparent p-2 focus:outline-none">
+          <div className="h-5 w-5" />
         </button>
       </div>
     );
   }
 
   return (
-    <div className="relative group">
-      <div className="absolute -inset-0.5 rounded-lg overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 animate-gradient-rotate opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div className="group relative">
+      <div className="absolute -inset-0.5 overflow-hidden rounded-lg">
+        <div className="animate-gradient-rotate absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
       </div>
       <button
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-        className="relative flex items-center justify-center w-10 h-10 rounded-md bg-transparent text-gray-700 dark:text-gray-200 hover:bg-pink-100 dark:hover:bg-pink-900/50 focus:outline-none transition-all duration-200"
+        className="relative flex items-center justify-center rounded-md bg-transparent p-1 text-gray-700 transition-all duration-200 hover:bg-pink-100 focus:outline-none dark:text-gray-200 dark:hover:bg-pink-900"
         aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       >
-        {theme === 'dark' ? (
-          <Sun className="w-5 h-5" />
-        ) : (
-          <Moon className="w-5 h-5" />
-        )}
+        {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
       </button>
     </div>
   );

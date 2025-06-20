@@ -7,28 +7,20 @@ A modern web application for the Business Analysis Academy, built with Next.js, 
 
 User registration will involve them completing a questionnaire to help us understand their background and interests. This will help us to better understand their needs and provide them with the most relevant content. As well as gain insights into their ability to be a good BA. 
 
-The application will have training routes to follow, depending on the BA's level of experience. 
-- Foundation
-- Practitioner
-- Professional
-- Master
-Each of these will require an exam to be passed to progress to the next level.
-
-The application will have lots of fun references to sheep in it. 
-
 ## Features
 
-- Modern, responsive UI built with Tailwind CSS
-- Server-side rendering with Next.js
-- Authentication and data management with Supabase
-- State management with React Query
-- Type-safe development with TypeScript
+- 🎨 Modern, responsive UI built with Tailwind CSS
+- ⚡ Server-side rendering with Next.js
+- ✉️ Contact form with server-side validation
+- 🌓 Light/dark theme support
+- 🚀 Optimized for performance and accessibility
+- 🔒 Secure form handling with rate limiting
+- 📱 Fully responsive design
 
 ## Tech Stack
 
 - Next.js 14
 - React 18
-- Supabase
 - Tailwind CSS
 - TypeScript
 - React Query
@@ -57,11 +49,14 @@ The application will have lots of fun references to sheep in it.
    yarn
    ```
 
-3. Set up environment variables:
+3. Copy the example environment file:
    ```bash
    cp .env.example .env.local
    ```
-   Update the values in `.env.local` with your Supabase credentials.
+
+4. Update the environment variables in `.env.local` with your configuration:
+   - SMTP settings for the contact form
+   - Any other required API keys
 
 4. Run the development server:
    ```bash
@@ -108,42 +103,68 @@ The application will have lots of fun references to sheep in it.
 
 ### Production Deployment
 
-1. Merge the `dev` branch into `main`:
-   ```bash
-   git checkout main
-   git merge dev
-   git push origin main
-   ```
-2. The main branch is automatically deployed to production via Render.
-
-### Manual Deployment with Docker
-
-1. Build the Docker image:
-   ```bash
-   docker build -t business-analysis-academy .
-   ```
-
-2. Run the container:
-   ```bash
-   docker run -p 3000:3000 business-analysis-academy
-   ```
 
 ## Environment Variables
 
-Create a `.env.local` file with the following variables:
+Create a `.env.local` file in the root directory and add the following variables:
 
-```
+```bash
+# Supabase Configuration (if using Supabase)
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url_here
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+
+# SMTP Configuration for Email
+SMTP_HOST=your_smtp_host_here
+SMTP_PORT=587
+SMTP_USER=your_smtp_username_here
+SMTP_PASS=your_smtp_password_here
+SMTP_FROM=your_email@example.com
+SMTP_FROM_NAME="Your Name"
+
+# Environment
+NODE_ENV=development
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000  # 15 minutes
+RATE_LIMIT_MAX_REQUESTS=5
+
+# Contact Form
+CONTACT_EMAIL=your_contact_email@example.com
+
+# Next.js Configuration
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your_nextauth_secret_here
+
+# Google Analytics (optional)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 ```
 
-## Scripts
+## Development
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run analyze` - Analyze bundle size
+- Run the development server:
+  ```bash
+  npm run dev
+  ```
+
+- Lint your code:
+  ```bash
+  npm run lint
+  ```
+
+- Format your code:
+  ```bash
+  npm run format
+  ```
+
+## Deployment
+
+This project can be deployed to any platform that supports Next.js applications. Recommended platforms:
+
+- [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
+- [Netlify](https://www.netlify.com/)
+- [AWS Amplify](https://aws.amazon.com/amplify/)
+
+Make sure to set up all required environment variables in your deployment platform's settings.
 
 ## Contributing
 
@@ -155,4 +176,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any questions or feedback, please contact us at [your-email@example.com](mailto:your-email@example.com).

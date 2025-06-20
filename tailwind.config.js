@@ -18,7 +18,7 @@ module.exports = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
-        
+
         // Color definitions
         primary: {
           DEFAULT: 'hsl(var(--primary))',
@@ -71,7 +71,7 @@ module.exports = {
     },
   },
   plugins: [
-    function({ addUtilities, theme }) {
+    function ({ addUtilities, theme }) {
       const newUtilities = {
         // Background utilities
         '.bg-background': {
@@ -85,4 +85,4 @@ module.exports = {
       addUtilities(newUtilities);
     },
   ],
-}
+};

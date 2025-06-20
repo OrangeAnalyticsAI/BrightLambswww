@@ -15,21 +15,15 @@ export default function VideoBackground({ src }: { src: string }) {
     };
 
     video.addEventListener('ended', handleEnded);
-    
+
     return () => {
       video.removeEventListener('ended', handleEnded);
     };
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full">
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        playsInline
-        className="w-full h-full object-cover"
-      >
+    <div className="absolute inset-0 h-full w-full">
+      <video ref={videoRef} autoPlay muted playsInline className="h-full w-full object-cover">
         <source src={src} type="video/mp4" />
         Your browser does not support the video tag.
       </video>

@@ -10,12 +10,12 @@ interface CourseContentProps {
   onLessonComplete: (lessonId: string) => void;
 }
 
-export function CourseContent({ 
-  course, 
-  activeSection, 
-  isInstructor, 
-  completedLessons, 
-  onLessonComplete 
+export function CourseContent({
+  course,
+  activeSection,
+  isInstructor,
+  completedLessons,
+  onLessonComplete,
 }: CourseContentProps) {
   // In a real app, you would fetch the actual course content
   // This is a simplified version with mock data
@@ -33,16 +33,16 @@ export function CourseContent({
             <li>Stakeholder management</li>
             <li>Agile methodologies for business analysts</li>
           </ul>
-          
+
           <h3>Requirements</h3>
           <ul>
             <li>No prior experience required</li>
             <li>Basic understanding of business processes is helpful but not required</li>
           </ul>
-          
+
           <h3>Description</h3>
           <p>{course.description}</p>
-          
+
           <h3>Who this course is for</h3>
           <ul>
             <li>Aspiring business analysts</li>
@@ -62,9 +62,24 @@ export function CourseContent({
           description: 'Learn the fundamentals of business analysis',
           duration: '45 min',
           lessons: [
-            { id: 'lesson-1', title: 'What is Business Analysis?', duration: '15 min', locked: false },
-            { id: 'lesson-2', title: 'The Role of a Business Analyst', duration: '15 min', locked: false },
-            { id: 'lesson-3', title: 'Key Concepts and Terminologies', duration: '15 min', locked: false },
+            {
+              id: 'lesson-1',
+              title: 'What is Business Analysis?',
+              duration: '15 min',
+              locked: false,
+            },
+            {
+              id: 'lesson-2',
+              title: 'The Role of a Business Analyst',
+              duration: '15 min',
+              locked: false,
+            },
+            {
+              id: 'lesson-3',
+              title: 'Key Concepts and Terminologies',
+              duration: '15 min',
+              locked: false,
+            },
           ],
         },
         {
@@ -74,10 +89,30 @@ export function CourseContent({
           duration: '1h 30min',
           locked: !course.is_premium,
           lessons: [
-            { id: 'lesson-4', title: 'Types of Requirements', duration: '20 min', locked: !course.is_premium },
-            { id: 'lesson-5', title: 'Requirements Elicitation Techniques', duration: '25 min', locked: !course.is_premium },
-            { id: 'lesson-6', title: 'Documenting Requirements', duration: '25 min', locked: !course.is_premium },
-            { id: 'lesson-7', title: 'Requirements Validation', duration: '20 min', locked: !course.is_premium },
+            {
+              id: 'lesson-4',
+              title: 'Types of Requirements',
+              duration: '20 min',
+              locked: !course.is_premium,
+            },
+            {
+              id: 'lesson-5',
+              title: 'Requirements Elicitation Techniques',
+              duration: '25 min',
+              locked: !course.is_premium,
+            },
+            {
+              id: 'lesson-6',
+              title: 'Documenting Requirements',
+              duration: '25 min',
+              locked: !course.is_premium,
+            },
+            {
+              id: 'lesson-7',
+              title: 'Requirements Validation',
+              duration: '20 min',
+              locked: !course.is_premium,
+            },
           ],
         },
       ],
@@ -86,33 +121,43 @@ export function CourseContent({
       title: 'Course Resources',
       content: (
         <div className="space-y-4">
-          <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div className="overflow-hidden bg-white shadow sm:rounded-lg">
             <div className="px-4 py-5 sm:px-6">
-              <h3 className="text-lg leading-6 font-medium text-gray-900">Downloadable Resources</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Additional materials to support your learning</p>
+              <h3 className="text-lg font-medium leading-6 text-gray-900">
+                Downloadable Resources
+              </h3>
+              <p className="mt-1 max-w-2xl text-sm text-gray-500">
+                Additional materials to support your learning
+              </p>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
               <dl className="sm:divide-y sm:divide-gray-200">
-                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                   <dt className="text-sm font-medium text-gray-500">Course Slides</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    <a href="#" className="text-blue-600 hover:text-blue-800">Download PDF</a>
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <a href="#" className="text-blue-600 hover:text-blue-800">
+                      Download PDF
+                    </a>
                   </dd>
                 </div>
-                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                   <dt className="text-sm font-medium text-gray-500">Case Studies</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {course.is_premium ? (
-                      <a href="#" className="text-blue-600 hover:text-blue-800">Download ZIP</a>
+                      <a href="#" className="text-blue-600 hover:text-blue-800">
+                        Download ZIP
+                      </a>
                     ) : (
                       <span className="text-gray-400">Available for premium members</span>
                     )}
                   </dd>
                 </div>
-                <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                   <dt className="text-sm font-medium text-gray-500">Templates</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    <a href="#" className="text-blue-600 hover:text-blue-800">Download Templates</a>
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <a href="#" className="text-blue-600 hover:text-blue-800">
+                      Download Templates
+                    </a>
                   </dd>
                 </div>
               </dl>
@@ -130,14 +175,14 @@ export function CourseContent({
       return (
         <div className="space-y-8">
           {courseContent.curriculum.modules.map((module) => (
-            <div key={module.id} className="bg-white shadow overflow-hidden sm:rounded-lg">
-              <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
+            <div key={module.id} className="overflow-hidden bg-white shadow sm:rounded-lg">
+              <div className="flex items-center justify-between px-4 py-5 sm:px-6">
                 <div>
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">{module.title}</h3>
+                  <h3 className="text-lg font-medium leading-6 text-gray-900">{module.title}</h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">{module.description}</p>
                 </div>
                 {module.locked && (
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-800">
                     Premium
                   </span>
                 )}
@@ -150,12 +195,12 @@ export function CourseContent({
                         <button
                           onClick={() => !lesson.locked && onLessonComplete(lesson.id)}
                           disabled={lesson.locked}
-                          className={`flex-shrink-0 h-5 w-5 ${
+                          className={`h-5 w-5 flex-shrink-0 ${
                             completedLessons.includes(lesson.id)
                               ? 'text-green-500'
                               : lesson.locked
-                              ? 'text-gray-300 cursor-not-allowed'
-                              : 'text-gray-300 hover:text-gray-400'
+                                ? 'cursor-not-allowed text-gray-300'
+                                : 'text-gray-300 hover:text-gray-400'
                           }`}
                         >
                           {completedLessons.includes(lesson.id) ? (
@@ -163,20 +208,22 @@ export function CourseContent({
                           ) : lesson.locked ? (
                             <LockClosedIcon className="h-4 w-4" />
                           ) : (
-                            <div className="h-4 w-4 border-2 border-gray-300 rounded-full" />
+                            <div className="h-4 w-4 rounded-full border-2 border-gray-300" />
                           )}
                         </button>
                         <div className="ml-3 flex-1">
-                          <p className={`text-sm font-medium ${
-                            lesson.locked ? 'text-gray-400' : 'text-gray-900'
-                          }`}>
+                          <p
+                            className={`text-sm font-medium ${
+                              lesson.locked ? 'text-gray-400' : 'text-gray-900'
+                            }`}
+                          >
                             {lesson.title}
                             {lesson.locked && ' (Premium)'}
                           </p>
                           <p className="text-xs text-gray-500">{lesson.duration}</p>
                         </div>
                         {!lesson.locked && (
-                          <button className="ml-4 inline-flex items-center px-3 py-1 border border-transparent text-xs font-medium rounded text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                          <button className="ml-4 inline-flex items-center rounded border border-transparent bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                             Start
                           </button>
                         )}
@@ -193,13 +240,15 @@ export function CourseContent({
       return courseContent.resources.content;
     } else if (activeSection === 'discussion') {
       return (
-        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div className="overflow-hidden bg-white shadow sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">Course Discussion</h3>
-            <p className="mt-1 max-w-2xl text-sm text-gray-500">Ask questions and discuss with other students</p>
+            <h3 className="text-lg font-medium leading-6 text-gray-900">Course Discussion</h3>
+            <p className="mt-1 max-w-2xl text-sm text-gray-500">
+              Ask questions and discuss with other students
+            </p>
           </div>
           <div className="px-4 py-5 sm:p-6">
-            <div className="text-center py-12">
+            <div className="py-12 text-center">
               <svg
                 className="mx-auto h-12 w-12 text-gray-400"
                 fill="none"
@@ -219,7 +268,7 @@ export function CourseContent({
               <div className="mt-6">
                 <button
                   type="button"
-                  className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                  className="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 >
                   <svg
                     className="-ml-1 mr-2 h-5 w-5"
@@ -246,7 +295,7 @@ export function CourseContent({
   };
 
   return (
-    <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+    <div className="overflow-hidden bg-white shadow sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">
         <h2 className="text-xl font-semibold text-gray-900">
           {activeSection === 'overview' && courseContent.overview.title}
@@ -255,9 +304,7 @@ export function CourseContent({
           {activeSection === 'discussion' && 'Discussion'}
         </h2>
       </div>
-      <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
-        {renderContent()}
-      </div>
+      <div className="border-t border-gray-200 px-4 py-5 sm:p-6">{renderContent()}</div>
     </div>
   );
 }

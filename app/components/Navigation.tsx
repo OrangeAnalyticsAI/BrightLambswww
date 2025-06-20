@@ -68,83 +68,95 @@ export default function Navigation() {
   const pathname = usePathname();
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-sm sticky top-0 z-40 py-2">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
+    <header className="sticky top-0 z-40 bg-white py-2 shadow-sm dark:bg-gray-900">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
           <div className="flex items-center pt-1">
-            <span className="text-2xl font-bold tracking-tight ml-24 mt-1 font-baloo2 [text-shadow:0.5px_0.5px_0.5px_rgba(0,0,0,0.1)] dark:[text-shadow:0.5px_0.5px_0.5px_rgba(255,255,255,0.1)]">
+            <span className="ml-24 mt-1 font-baloo2 text-2xl font-bold tracking-tight [text-shadow:0.5px_0.5px_0.5px_rgba(0,0,0,0.1)] dark:[text-shadow:0.5px_0.5px_0.5px_rgba(255,255,255,0.1)]">
               <span className="text-pink-700 dark:text-pink-400">Bright</span>{' '}
               <span className="text-orange-500 dark:text-orange-400">Lambs</span>
             </span>
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <nav className="hidden md:flex md:items-center md:space-x-2">
               <ThemeToggle />
-              {navLinks.map((link) => (
-              link.external ? (
-                <div className="relative group" key={link.href}>
-                  <div className="absolute -inset-0.5 rounded-lg overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 animate-gradient-rotate opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              {navLinks.map((link) =>
+                link.external ? (
+                  <div className="group relative" key={link.href}>
+                    <div className="absolute -inset-0.5 overflow-hidden rounded-lg">
+                      <div className="animate-gradient-rotate absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                    </div>
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative flex items-center justify-center rounded-md bg-transparent px-3 py-1 text-base font-medium text-gray-900 transition-all duration-300 hover:bg-pink-100 hover:shadow-sm dark:text-white dark:hover:bg-pink-900"
+                    >
+                      {link.name}
+                    </a>
                   </div>
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative px-3 py-1 text-base font-medium text-gray-900 dark:text-white bg-transparent rounded-md flex items-center justify-center hover:bg-pink-100 dark:hover:bg-pink-900 hover:shadow-sm transition-all duration-300"
+                ) : (
+                  <div
+                    className={`group relative ${pathname === link.href ? 'active-nav' : ''}`}
+                    key={link.href}
                   >
-                    {link.name}
-                  </a>
-                </div>
-              ) : (
-                <div className={`relative group ${pathname === link.href ? 'active-nav' : ''}`} key={link.href}>
-                  <div className={`absolute -inset-0.5 rounded-lg overflow-hidden ${
-                    (pathname === link.href || (link.href === '/' && pathname?.startsWith('/services'))) 
-                      ? 'opacity-100' 
-                      : 'opacity-0 group-hover:opacity-100' 
-                  } transition-opacity duration-300`}>
-                    <div className={`absolute inset-0 ${
-                      (pathname === link.href || 
-                       (link.href === '/' && pathname?.startsWith('/services'))) 
-                        ? 'bg-pink-200 dark:bg-pink-900/30' 
-                        : 'bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 animate-gradient-rotate'
-                    }`}></div>
+                    <div
+                      className={`absolute -inset-0.5 overflow-hidden rounded-lg ${
+                        pathname === link.href ||
+                        (link.href === '/' && pathname?.startsWith('/services'))
+                          ? 'opacity-100'
+                          : 'opacity-0 group-hover:opacity-100'
+                      } transition-opacity duration-300`}
+                    >
+                      <div
+                        className={`absolute inset-0 ${
+                          pathname === link.href ||
+                          (link.href === '/' && pathname?.startsWith('/services'))
+                            ? 'bg-pink-200 dark:bg-pink-900/30'
+                            : 'animate-gradient-rotate bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500'
+                        }`}
+                      ></div>
+                    </div>
+                    <Link
+                      href={link.href}
+                      className={`relative flex items-center rounded-md px-3 py-1 text-base font-medium transition-all duration-300 ${
+                        pathname &&
+                        (pathname === link.href ||
+                          (link.href === '/' &&
+                            (pathname === '/' ||
+                              pathname === '' ||
+                              pathname.startsWith('/services'))) ||
+                          (link.href === '/services' && pathname.startsWith('/services')))
+                          ? 'rounded-md bg-pink-100 text-gray-900 dark:bg-pink-900 dark:text-white'
+                          : 'rounded-md text-gray-700 transition-colors duration-200 hover:bg-pink-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-pink-900 dark:hover:text-white'
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
                   </div>
-                  <Link 
-                    href={link.href}
-                    className={`relative px-3 py-1 text-base font-medium rounded-md flex items-center transition-all duration-300 ${
-                      (pathname && (pathname === link.href || 
-                        (link.href === '/' && (pathname === '/' || pathname === '' || pathname.startsWith('/services'))) ||
-                        (link.href === '/services' && pathname.startsWith('/services'))))
-                        ? 'text-gray-900 dark:text-white bg-pink-100 dark:bg-pink-900 rounded-md' 
-                        : 'text-gray-700 hover:text-gray-900 hover:bg-pink-100 dark:text-gray-300 dark:hover:text-white dark:hover:bg-pink-900 rounded-md transition-colors duration-200'
-                    }`}
-                  >
-                    {link.name}
-                  </Link>
+                )
+              )}
+              <div className="group relative ml-2">
+                <div className="absolute -inset-0.5 overflow-hidden rounded-lg">
+                  <div className="animate-gradient-rotate absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                 </div>
-              )
-            ))}
-            <div className="relative group ml-2">
-              <div className="absolute -inset-0.5 rounded-lg overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 animate-gradient-rotate opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <Link
+                  href="/contact"
+                  className="relative inline-flex items-center rounded-md bg-blue-100 px-3 py-1 text-base font-medium text-gray-900 transition-all duration-300 hover:bg-gradient-to-br hover:from-blue-100 hover:to-blue-200 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-900 dark:text-white dark:hover:from-blue-900/30 dark:hover:to-blue-900/30"
+                >
+                  Contact Us
+                </Link>
               </div>
-              <Link 
-                href="/contact" 
-                className="relative inline-flex items-center px-3 py-1 text-base font-medium rounded-md transition-all duration-300 text-gray-900 dark:text-white bg-blue-100 dark:bg-blue-900 hover:bg-gradient-to-br hover:from-blue-100 hover:to-blue-200 dark:hover:from-blue-900/30 dark:hover:to-blue-900/30 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-              >
-                Contact Us
-              </Link>
-            </div>
             </nav>
           </div>
-          
+
           {/* Mobile menu button */}
-          <div className="flex items-center md:hidden space-x-2">
+          <div className="flex items-center space-x-2 md:hidden">
             <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:text-gray-300 dark:hover:bg-gray-800"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -161,7 +173,7 @@ export default function Navigation() {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="pt-2 pb-3 space-y-1 text-right pr-4">
+          <div className="space-y-1 pb-3 pr-4 pt-2 text-right">
             {navLinks.map((link) =>
               link.external ? (
                 <a
@@ -169,7 +181,7 @@ export default function Navigation() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.name}
@@ -179,8 +191,9 @@ export default function Navigation() {
                   key={link.href}
                   href={link.href}
                   className={`block px-4 py-3 text-base font-medium ${
-                    pathname === link.href || (link.href === '/' && pathname?.startsWith('/services'))
-                      ? 'text-pink-700 dark:text-pink-400 bg-pink-50 dark:bg-pink-900/20'
+                    pathname === link.href ||
+                    (link.href === '/' && pathname?.startsWith('/services'))
+                      ? 'bg-pink-50 text-pink-700 dark:bg-pink-900/20 dark:text-pink-400'
                       : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
@@ -191,7 +204,7 @@ export default function Navigation() {
             )}
             <Link
               href="/contact"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+              className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
               onClick={() => setIsMenuOpen(false)}
             >
               Contact Us

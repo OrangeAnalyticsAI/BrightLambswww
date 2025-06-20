@@ -52,7 +52,7 @@ export function createClient() {
   supabase.auth.onAuthStateChange((event, session) => {
     console.log('Auth state changed:', event, session);
     console.log('Current URL:', window.location.href);
-    
+
     // If we're signed in but no session, try to recover it
     if (event === 'SIGNED_IN' && !session) {
       console.log('Signed in but no session, attempting recovery...');

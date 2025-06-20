@@ -31,7 +31,9 @@ export default function SupabaseProvider({
   const refreshSession = useCallback(async () => {
     try {
       setLoading(true);
-      const { data: { session: newSession } } = await supabase.auth.getSession();
+      const {
+        data: { session: newSession },
+      } = await supabase.auth.getSession();
       console.log('[Auth] Session refreshed:', newSession ? 'Authenticated' : 'No session');
       setSession(newSession);
       return newSession;
@@ -49,14 +51,14 @@ export default function SupabaseProvider({
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
-      console.log('[Auth] State changed:', event, { 
+      console.log('[Auth] State changed:', event, {
         hasSession: !!currentSession,
-        currentPath: pathname
+        currentPath: pathname,
       });
-      
+
       // Update the session state
       setSession(currentSession);
-      
+
       // Handle specific auth events
       switch (event) {
         case 'SIGNED_IN':
@@ -64,21 +66,21 @@ export default function SupabaseProvider({
           // Force a refresh to update the UI
           router.refresh();
           break;
-          
+
         case 'SIGNED_OUT':
           console.log('[Auth] User signed out, refreshing router');
           setSession(null);
           router.refresh();
           break;
-          
+
         case 'TOKEN_REFRESHED':
           console.log('[Auth] Token refreshed');
           break;
-          
+
         case 'USER_UPDATED':
           console.log('[Auth] User updated');
           break;
-          
+
         default:
           console.log(`[Auth] Unhandled auth event: ${event}`);
       }
@@ -109,11 +111,7 @@ export default function SupabaseProvider({
     refreshSession,
   };
 
-  return (
-    <Context.Provider value={value}>
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 export const useSession = () => {

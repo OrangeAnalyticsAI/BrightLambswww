@@ -17,7 +17,7 @@ export default function ProfileImageUploader({
   userId,
   currentAvatarPath,
   onAvatarChangeAction,
-  isEditMode = false
+  isEditMode = false,
 }: ProfileImageUploaderProps) {
   console.log('ProfileImageUploader rendered with currentAvatarPath:', currentAvatarPath);
   const [isUploading, setIsUploading] = useState(false);
@@ -33,13 +33,13 @@ export default function ProfileImageUploader({
     // Validate file type
     const validTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     if (!validTypes.includes(file.type)) {
-      toast.error("Please select a valid image file (JPEG, PNG, GIF, or WebP)");
+      toast.error('Please select a valid image file (JPEG, PNG, GIF, or WebP)');
       return;
     }
 
     // Validate file size (max 2MB)
     if (file.size > 2 * 1024 * 1024) {
-      toast.error("Image size should be less than 2MB");
+      toast.error('Image size should be less than 2MB');
       return;
     }
 
@@ -50,16 +50,16 @@ export default function ProfileImageUploader({
     try {
       setIsUploading(true);
       const path = await uploadUserAvatar(userId, file);
-      
+
       if (path) {
         onAvatarChangeAction(path);
-        toast.success("Profile image uploaded successfully");
+        toast.success('Profile image uploaded successfully');
       } else {
-        toast.error("Failed to upload image");
+        toast.error('Failed to upload image');
       }
     } catch (error) {
       console.error('Upload error:', error);
-      toast.error("Failed to upload image");
+      toast.error('Failed to upload image');
     } finally {
       setIsUploading(false);
       // Revoke object URL to avoid memory leaks
@@ -77,7 +77,7 @@ export default function ProfileImageUploader({
   const selectDefaultAvatar = (avatarPath: string) => {
     onAvatarChangeAction(avatarPath);
     setShowDefaultOptions(false);
-    toast.success("Default avatar selected");
+    toast.success('Default avatar selected');
   };
 
   // Toggle default avatar options
@@ -96,18 +96,13 @@ export default function ProfileImageUploader({
   return (
     <div className="relative">
       {/* Current Avatar Display */}
-      <div className="relative w-32 h-32 rounded-full overflow-hidden bg-gray-100 border border-gray-300 group">
+      <div className="group relative h-32 w-32 overflow-hidden rounded-full border border-gray-300 bg-gray-100">
         {previewUrl ? (
           // Preview of selected image
-          <Image
-            src={previewUrl}
-            alt="Preview"
-            fill
-            className="object-cover"
-          />
+          <Image src={previewUrl} alt="Preview" fill className="object-cover" />
         ) : currentAvatarPath ? (
           // Current avatar
-          <div className="w-full h-full">
+          <div className="h-full w-full">
             {currentAvatarPath.startsWith('default:') ? (
               // Default avatar from our list
               <Image
@@ -118,11 +113,11 @@ export default function ProfileImageUploader({
               />
             ) : (
               // User uploaded avatar - use a regular img tag to avoid Next.js Image optimization issues
-              <div className="relative w-full h-full">
+              <div className="relative h-full w-full">
                 <img
                   src={`/api/avatar?path=${encodeURIComponent(currentAvatarPath)}`}
                   alt="Avatar"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 h-full w-full object-cover"
                   onError={(e) => {
                     console.error('Avatar image failed to load:', e);
                   }}
@@ -132,19 +127,19 @@ export default function ProfileImageUploader({
           </div>
         ) : (
           // No avatar placeholder
-          <div className="flex items-center justify-center h-full bg-gray-200">
+          <div className="flex h-full items-center justify-center bg-gray-200">
             <User className="h-16 w-16 text-gray-400" />
           </div>
         )}
-        
+
         {/* Overlay with options - only shown in edit mode */}
         {isEditMode && (
-          <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 transition-opacity group-hover:opacity-100">
             <div className="flex space-x-2">
               <button
                 type="button"
                 onClick={triggerFileUpload}
-                className="p-2 bg-white rounded-full text-gray-700 hover:bg-gray-100"
+                className="rounded-full bg-white p-2 text-gray-700 hover:bg-gray-100"
                 title="Upload custom image"
               >
                 <Upload className="h-5 w-5" />
@@ -152,7 +147,7 @@ export default function ProfileImageUploader({
               <button
                 type="button"
                 onClick={toggleDefaultOptions}
-                className="p-2 bg-white rounded-full text-gray-700 hover:bg-gray-100"
+                className="rounded-full bg-white p-2 text-gray-700 hover:bg-gray-100"
                 title="Choose default avatar"
               >
                 <Camera className="h-5 w-5" />
@@ -175,18 +170,18 @@ export default function ProfileImageUploader({
 
       {/* Loading Indicator */}
       {isUploading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 rounded-full">
-          <div className="h-8 w-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="absolute inset-0 flex items-center justify-center rounded-full bg-white bg-opacity-75">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-indigo-500 border-t-transparent"></div>
         </div>
       )}
 
       {/* Preview Controls */}
       {previewUrl && (
-        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <div className="absolute -bottom-2 left-1/2 flex -translate-x-1/2 transform space-x-2">
           <button
             type="button"
             onClick={cancelPreview}
-            className="p-1 bg-white rounded-full text-red-500 border border-red-200 hover:bg-red-50"
+            className="rounded-full border border-red-200 bg-white p-1 text-red-500 hover:bg-red-50"
             title="Cancel"
           >
             <X className="h-4 w-4" />
@@ -196,13 +191,13 @@ export default function ProfileImageUploader({
 
       {/* Default Avatar Options - only shown in edit mode */}
       {isEditMode && showDefaultOptions && (
-        <div className="absolute top-full mt-2 left-1/2 transform -translate-x-1/2 bg-white p-3 rounded-lg shadow-lg border border-gray-200 z-10">
-          <div className="flex flex-wrap gap-2 max-w-xs max-h-60 overflow-y-auto pr-1">
+        <div className="absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 transform rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
+          <div className="flex max-h-60 max-w-xs flex-wrap gap-2 overflow-y-auto pr-1">
             {DEFAULT_AVATARS.map((avatar, index) => (
               <button
                 key={index}
                 onClick={() => selectDefaultAvatar(avatar)}
-                className="w-16 h-16 rounded-full overflow-hidden border-2 hover:border-indigo-500 focus:border-indigo-500 focus:outline-none transition-colors"
+                className="h-16 w-16 overflow-hidden rounded-full border-2 transition-colors hover:border-indigo-500 focus:border-indigo-500 focus:outline-none"
               >
                 <Image
                   src={`/images/default-avatars/${avatar.replace('default:', '')}`}

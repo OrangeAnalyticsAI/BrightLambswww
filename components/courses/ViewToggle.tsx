@@ -15,12 +15,14 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ activeView, onViewChange }) => 
           type="button"
           onClick={() => onViewChange('courses')}
           className={`
-            px-6 py-2 text-sm font-medium rounded-full mr-2 
-            ${activeView === 'courses' 
-              ? 'bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:from-pink-600 hover:to-blue-600'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}
-            border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-            transition-all duration-200
+            mr-2 rounded-full px-6 py-2 text-sm font-medium 
+            ${
+              activeView === 'courses'
+                ? 'bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:from-pink-600 hover:to-blue-600'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }
+            border border-transparent transition-all duration-200 focus:outline-none focus:ring-2
+            focus:ring-blue-500 focus:ring-offset-2
           `}
         >
           Courses
@@ -29,12 +31,14 @@ const ViewToggle: React.FC<ViewToggleProps> = ({ activeView, onViewChange }) => 
           type="button"
           onClick={() => onViewChange('lessons')}
           className={`
-            px-6 py-2 text-sm font-medium rounded-full 
-            ${activeView === 'lessons' 
-              ? 'bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:from-pink-600 hover:to-blue-600'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}
-            border border-transparent focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
-            transition-all duration-200
+            rounded-full px-6 py-2 text-sm font-medium 
+            ${
+              activeView === 'lessons'
+                ? 'bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:from-pink-600 hover:to-blue-600'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }
+            border border-transparent transition-all duration-200 focus:outline-none focus:ring-2
+            focus:ring-blue-500 focus:ring-offset-2
           `}
         >
           Lessons

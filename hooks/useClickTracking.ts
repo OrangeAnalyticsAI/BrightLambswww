@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useEffect } from 'react';
 
@@ -6,7 +6,7 @@ const useClickTracking = () => {
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      
+
       // Get element details
       const elementInfo = {
         tag: target.tagName.toLowerCase(),
@@ -16,7 +16,7 @@ const useClickTracking = () => {
         x: event.clientX,
         y: event.clientY,
         timestamp: new Date().toISOString(),
-        path: getSelector(target)
+        path: getSelector(target),
       };
 
       console.log('Element clicked:', elementInfo);
