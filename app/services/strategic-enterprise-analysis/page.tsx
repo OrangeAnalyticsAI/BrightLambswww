@@ -174,7 +174,7 @@ export default function StrategicEnterpriseAnalysis() {
       title="Business Needs & Strategic Analysis"
       headerContent={headerContent}
       content={content}
-      imageUrl="/images/strategic-analysis.jpg"
+      imageUrl="/images/services/strategic-analysis.jpg"
     />
   );
 }

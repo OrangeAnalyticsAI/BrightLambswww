@@ -157,19 +157,31 @@ export default function BusinessNeedsStrategy() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'business-needs-strategy');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'business-needs-strategy');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
       title="Business Needs & Strategic Analysis"
-      headerContent={headerContent}
+      description="This is the foundational phase where Business Analysts operate at the enterprise level—bridging overarching business objectives with actionable initiatives. It goes beyond tactical problem-solving to deeply shape an organization's direction."
       content={content}
-      imageUrl="/images/strategic-analysis.jpg"
+      imageUrl="/images/services/strategic-analysis.jpg"
+      showBackButton={true}
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }

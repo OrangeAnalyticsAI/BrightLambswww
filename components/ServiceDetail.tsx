@@ -1,20 +1,33 @@
 'use client';
 
 import Image from 'next/image';
-import React, { ReactNode, ReactElement, Children, isValidElement, cloneElement } from 'react';
+import React, { ReactNode, ReactElement, useMemo, Children, isValidElement, cloneElement } from 'react';
 import { useTheme } from 'next-themes';
 
-interface SectionProps {
+export interface SectionProps {
+  title?: string;
   children?: ReactNode;
   className?: string;
-  [key: string]: any;
+  isDark?: boolean;
 }
 
 interface ServiceDetailProps {
   title: string;
-  content: ReactElement<SectionProps>[];
-  headerContent?: ReactNode;
-  imageUrl?: string;
+  description: string;
+  content: ReactElement[];
+  imageUrl: string;
+  icon?: React.ReactNode;
+  showBackButton?: boolean;
+  showBackButtonRight?: boolean;
+  prevService?: {
+    title: string;
+    href: string;
+  };
+  nextService?: {
+    title: string;
+    href: string;
+  };
+  children?: React.ReactNode;
 }
 
 // Recursive function to add dark mode classes to all text elements
@@ -64,46 +77,192 @@ const addDarkModeClasses = (element: ReactElement, isDark: boolean): ReactElemen
 export default function ServiceDetail({
   title,
   content,
-  headerContent,
+  description,
   imageUrl = '/placeholder-service.jpg',
+  icon,
+  showBackButton = false,
+  showBackButtonRight = false,
+  prevService,
+  nextService,
+  children,
 }: ServiceDetailProps) {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
   // Process content with dark mode classes
-  const processedContent = content.map((section, index) => {
-    if (!isValidElement(section)) return section;
+  const processedContent = useMemo(() => {
+    if (!Array.isArray(content)) return [];
+    
+    return content.map((section, index) => {
+      if (!isValidElement(section)) return section;
 
-    // Clone the section with dark mode classes applied to all nested elements
-    const processedSection = addDarkModeClasses(section, isDark);
+      // Process the section with dark mode classes
+      const processedSection = addDarkModeClasses(section, isDark);
 
-    return (
-      <div key={index} className="mb-8">
-        {processedSection}
-      </div>
-    );
-  });
+      // Return the processed section in a wrapper div
+      return (
+        <div key={index} className="mb-8">
+          {processedSection}
+        </div>
+      );
+    });
+  }, [content, isDark]);
 
   return (
     <div
-      className={`min-h-screen px-4 py-16 transition-colors duration-300 sm:px-6 lg:px-8 ${isDark ? 'bg-gray-900' : 'bg-gradient-to-b from-gray-50 to-gray-100'}`}
+      className={`min-h-screen transition-colors duration-300 ${
+        isDark ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
+      }`}
     >
-      <div className="mx-auto max-w-6xl">
-        <div
-          className={`overflow-hidden rounded-2xl shadow-xl transition-colors duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'}`}
-        >
-          <div className="bg-indigo-700 px-6 py-12 sm:px-12">
+      <div className="mx-auto max-w-7xl">
+        {/* Header */}
+        <div className="relative">
+          <div className="bg-indigo-700 px-6 pb-8 pt-12 sm:px-12">
             <h1 className="text-center text-4xl font-bold text-white">{title}</h1>
-            {headerContent}
+            <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
+              {description}
+            </p>
+            
+            {/* Navigation Buttons */}
+            <div className="relative -mx-6 mt-6 flex w-[calc(100%+3rem)] justify-between sm:-mx-12 sm:w-[calc(100%+6rem)]">
+              {/* Left side buttons */}
+              <div>
+                {showBackButton ? (
+                  <a
+                    href="/services"
+                    className="ml-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20 sm:ml-12"
+                  >
+                    <svg
+                      className="mr-2 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                      />
+                    </svg>
+                    Back to Services Overview
+                  </a>
+                ) : prevService ? (
+                  <a
+                    href={prevService.href}
+                    className="ml-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20 sm:ml-12"
+                  >
+                    <svg
+                      className="mr-2 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                    {prevService.title}
+                  </a>
+                ) : <div className="ml-6 sm:ml-12" />}
+                
+
+              </div>
+
+              {/* Right side buttons */}
+              <div className="flex items-center">
+                {nextService && (
+                  <a
+                    href={nextService.href}
+                    className="inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20"
+                  >
+                    {nextService.title}
+                    <svg
+                      className="ml-2 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
+                )}
+                {/* Invisible spacer to force space between buttons */}
+                <div className="w-2 sm:w-4 h-1 bg-indigo-700 mx-1 sm:mx-2" aria-hidden="true"></div>
+                {showBackButtonRight && (
+                  <a
+                    href="/services"
+                    className="mr-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20 sm:mr-12"
+                  >
+                    Back to Services Overview
+                    <svg
+                      className="ml-2 h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
 
           <div className="px-6 py-12 sm:px-12">
-            <div className="flex flex-col gap-12 lg:flex-row">
-              <div className="lg:w-2/3">{processedContent}</div>
+            <div className="relative">
+              {/* Main content container */}
+              <div className="relative">
+                {/* Desktop image - floats right */}
+                <div className="hidden lg:block float-right ml-8 mb-6 w-1/2 max-w-2xl">
+                  <div
+                    className={`rounded-lg p-4 transition-colors duration-300 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}
+                  >
+                    <div
+                      className={`aspect-w-4 aspect-h-3 w-full overflow-hidden rounded-lg transition-colors duration-300 ${isDark ? 'bg-gray-600' : 'bg-gray-200'}`}
+                    >
+                      <Image
+                        src={imageUrl}
+                        alt={title}
+                        width={800}
+                        height={600}
+                        className="h-full w-full object-cover"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Content that wraps around the image */}
+                <div className="prose max-w-4xl lg:prose-lg">
+                  {processedContent}
+                </div>
+                
+                {/* Clear fix for the float */}
+                <div className="clear-both" />
+              </div>
 
-              <div className="lg:w-1/3">
+              {/* Mobile image - only shown on mobile */}
+              <div className="mt-8 lg:hidden">
                 <div
-                  className={`h-full rounded-lg p-4 transition-colors duration-300 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}
+                  className={`rounded-lg p-4 transition-colors duration-300 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}
                 >
                   <div
                     className={`aspect-w-4 aspect-h-3 w-full overflow-hidden rounded-lg transition-colors duration-300 ${isDark ? 'bg-gray-600' : 'bg-gray-200'}`}
@@ -117,13 +276,56 @@ export default function ServiceDetail({
                       priority
                     />
                   </div>
-                  <div
-                    className={`mt-4 text-center text-sm transition-colors duration-300 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
-                  >
-                    [Image description or caption]
-                  </div>
                 </div>
               </div>
+            </div>
+            {/* Navigation Buttons */}
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
+              {prevService && (
+                <a
+                  href={prevService.href}
+                  className="inline-flex items-center rounded-full bg-white/10 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/20"
+                >
+                  <svg
+                    className="mr-2 h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                  {prevService.title}
+                </a>
+              )}
+              
+              {nextService && (
+                <a
+                  href={nextService.href}
+                  className="inline-flex items-center rounded-full bg-white/10 px-6 py-3 text-sm font-medium text-white transition hover:bg-white/20"
+                >
+                  {nextService.title}
+                  <svg
+                    className="ml-2 h-4 w-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
+              )}
             </div>
           </div>
         </div>

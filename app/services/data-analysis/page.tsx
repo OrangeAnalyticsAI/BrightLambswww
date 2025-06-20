@@ -14,14 +14,6 @@ export async function generateStaticParams() {
 export const revalidate = 3600;
 
 export default function DataAnalysis() {
-  const headerContent = (
-    <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
-      Data Analysis & Business Intelligence is at the heart of any data-driven organisation. While
-      distinct concepts, they work hand in hand: data analysis uncovers hidden insights, and BI
-      packages these insights into accessible tools for decision-making.
-    </p>
-  );
-
   const content = [
     <div key="section1">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">1. Data Gathering & Preparation</h2>
@@ -201,19 +193,31 @@ export default function DataAnalysis() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'data-analysis');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'data-analysis');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
       title="Data Analysis & Business Intelligence"
-      headerContent={headerContent}
+      description="Data Analysis & Business Intelligence is at the heart of any data-driven organisation. While distinct concepts, they work hand in hand: data analysis uncovers hidden insights, and BI packages these insights into accessible tools for decision-making."
       content={content}
-      imageUrl="/images/data-analysis.jpg"
+      imageUrl="/images/services/data-analysis.jpg"
+      showBackButton={false}
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }

@@ -13,7 +13,7 @@ export async function generateStaticParams() {
 // This tells Next.js to revalidate this page every hour
 export const revalidate = 3600;
 
-export default function ProcessOptimization() {
+export default function ProcessOptimisation() {
   const headerContent = (
     <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
       This is pivotal in transforming how an organisation operates; streamlining workflows, limiting
@@ -166,19 +166,30 @@ export default function ProcessOptimization() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'process-optimization');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'process-optimization');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
-      title="Process & Workflow Optimization"
-      headerContent={headerContent}
+      title="Process & Workflow Optimisation"
+      description="This is pivotal in transforming how an organisation operates; streamlining workflows, limiting inefficiencies, and enhancing agility to serve both customers and the business more effectively. Business analysts employ a methodical and iterative approach to achieve this."
       content={content}
-      imageUrl="/images/process-optimization.jpg"
+      imageUrl="/images/services/process-optimization.jpg"
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }

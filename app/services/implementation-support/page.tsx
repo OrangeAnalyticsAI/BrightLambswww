@@ -14,14 +14,6 @@ export async function generateStaticParams() {
 export const revalidate = 3600;
 
 export default function ImplementationSupport() {
-  const headerContent = (
-    <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
-      Implementation Oversight & Testing ensures that solutions meet the defined requirements, are
-      deployed effectively, and deliver real value. Business analysts act as the guardians of
-      solution integrity and user adoption throughout this essential phase.
-    </p>
-  );
-
   const content = [
     <div key="section1">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">1. Implementation Oversight</h2>
@@ -206,19 +198,31 @@ export default function ImplementationSupport() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'implementation-support');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'implementation-support');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
-      title="Implementation Oversight & Testing"
-      headerContent={headerContent}
+      title="Implementation Support & Validation"
+      description="Implementation Support & Testing ensures that solutions meet the defined requirements, are deployed effectively, and deliver real value. Business analysts act as the guardians of solution integrity and user adoption throughout this essential phase."
       content={content}
-      imageUrl="/images/implementation-oversight.jpg"
+      imageUrl="/images/services/implementation-oversight.jpg"
+      showBackButton={false}
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }

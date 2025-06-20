@@ -14,15 +14,6 @@ export async function generateStaticParams() {
 export const revalidate = 3600;
 
 export default function SolutionAssessment() {
-  const headerContent = (
-    <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
-      This is about guiding organisations through choosing the right path forward and ensuring the
-      chosen solution truly addresses their needs. Business analysts play a crucial role in this
-      phase, bridging strategy, stakeholder requirements, vendor offerings, and implementation
-      realities.
-    </p>
-  );
-
   const content = [
     <div key="section1">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">1. Defining Evaluation Criteria</h2>
@@ -171,19 +162,31 @@ export default function SolutionAssessment() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'solution-assessment');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'solution-assessment');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
       title="Solution Assessment & System Selection"
-      headerContent={headerContent}
+      description="This is about guiding organisations through choosing the right path forward and ensuring the chosen solution truly addresses their needs. Business analysts play a crucial role in this phase, bridging strategy, stakeholder requirements, vendor offerings, and implementation realities."
       content={content}
-      imageUrl="/images/solution-assessment.jpg"
+      imageUrl="/images/services/solution-assessment.jpg"
+      showBackButton={false}
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }

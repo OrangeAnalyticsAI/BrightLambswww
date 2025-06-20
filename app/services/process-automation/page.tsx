@@ -14,15 +14,6 @@ export async function generateStaticParams() {
 export const revalidate = 3600;
 
 export default function ProcessAutomation() {
-  const headerContent = (
-    <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
-      This is the bridge between process design and operation, enabling organisations to work more
-      efficiently and reliably. Business analysts play a central role in identifying, implementing
-      and refining automation and system-to-system connections that turn manual effort into
-      streamlined workflow.
-    </p>
-  );
-
   const content = [
     <div key="section1">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">
@@ -149,19 +140,31 @@ export default function ProcessAutomation() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'process-automation');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'process-automation');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
       title="Process Automation & System Integration"
-      headerContent={headerContent}
+      description="This is the bridge between process design and operation, enabling organisations to work more efficiently and reliably. Business analysts play a central role in identifying, implementing and refining automation and system-to-system connections that turn manual effort into streamlined workflow."
       content={content}
-      imageUrl="/images/process-automation.jpg"
+      imageUrl="/images/services/process-automation.jpg"
+      showBackButton={false}
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }

@@ -14,15 +14,6 @@ export async function generateStaticParams() {
 export const revalidate = 3600;
 
 export default function RequirementsElicitation() {
-  const headerContent = (
-    <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
-      The cornerstone of effective business analysis, where insights from stakeholders are
-      transformed into precise, actionable specifications. This phase ensures that the real needs of
-      the organisation are understood and thoroughly documented before any design or implementation
-      begins.
-    </p>
-  );
-
   const content = [
     <div key="section1">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">
@@ -164,19 +155,31 @@ export default function RequirementsElicitation() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'requirements-elicitation');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'requirements-elicitation');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
       title="Requirements Elicitation & Analysis"
-      headerContent={headerContent}
+      description="The cornerstone of effective business analysis, where insights from stakeholders are transformed into precise, actionable specifications. This phase ensures that the real needs of the organisation are understood and thoroughly documented before any design or implementation begins."
       content={content}
-      imageUrl="/images/requirements-elicitation.jpg"
+      imageUrl="/images/services/requirements-elicitation.jpg"
+      showBackButton={false}
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }

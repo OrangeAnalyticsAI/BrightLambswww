@@ -68,6 +68,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
     }
 
+    // Log SMTP config for debugging (excluding password)
+    console.log('SMTP Config:', {
+      host: process.env.SMTP_HOST ? 'set' : 'missing',
+      port: process.env.SMTP_PORT || '587 (default)',
+      secure: process.env.SMTP_SECURE || 'false (default)',
+      user: process.env.SMTP_USER ? 'set' : 'missing',
+      pass: process.env.SMTP_PASS ? 'set' : 'missing',
+      from: process.env.SMTP_FROM || 'using default',
+      contactEmail: process.env.CONTACT_EMAIL || 'using default',
+      nodeEnv: process.env.NODE_ENV || 'not set'
+    });
+
     // Create transporter
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'smtp.ethereal.email',
@@ -75,9 +87,34 @@ export async function POST(request: Request) {
       secure: process.env.SMTP_SECURE === 'true',
       auth: {
         user: process.env.SMTP_USER || testAccount?.user,
-        pass: process.env.SMTP_PASS || testAccount?.pass,  // Changed from SMTP_PASSWORD to SMTP_PASS
+        pass: process.env.SMTP_PASS || testAccount?.pass,
       },
+      // Add debug and logging
+      logger: true,
+      debug: true
     });
+
+    // Verify connection configuration
+    try {
+      await transporter.verify();
+      console.log('SMTP Server is ready to take our messages');
+    } catch (error) {
+      console.error('Error in contact form submission:', {
+        error: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+        timestamp: new Date().toISOString()
+      });
+      
+      return NextResponse.json(
+        { 
+          error: 'Failed to process your message. Please try again later.',
+          details: process.env.NODE_ENV === 'development' 
+            ? error instanceof Error ? error.message : 'Unknown error'
+            : undefined
+        },
+        { status: 500 }
+      );
+    }
 
     // Sanitize inputs to prevent XSS
     const sanitize = (str: string) => str.replace(/[<>]/g, '');

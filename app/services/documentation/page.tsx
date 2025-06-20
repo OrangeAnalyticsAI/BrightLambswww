@@ -14,14 +14,6 @@ export async function generateStaticParams() {
 export const revalidate = 3600;
 
 export default function Documentation() {
-  const headerContent = (
-    <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
-      Effective Documentation and Stakeholder Communication lie at the foundation of successful
-      business analysis. This discipline ensures clarity, alignment and transparency throughout a
-      project's lifecycle, from initial discovery through to post‑implementation reviews.
-    </p>
-  );
-
   const content = [
     <div key="section1">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">
@@ -198,19 +190,31 @@ export default function Documentation() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'documentation');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'documentation');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
       title="Documentation & Stakeholder Communication"
-      headerContent={headerContent}
+      description="Effective Documentation and Stakeholder Communication lie at the foundation of successful business analysis. This discipline ensures clarity, alignment and transparency throughout a project's lifecycle, from initial discovery through to post‑implementation reviews."
       content={content}
-      imageUrl="/images/documentation.jpg"
+      imageUrl="/images/services/documentation.jpg"
+      showBackButton={false}
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }

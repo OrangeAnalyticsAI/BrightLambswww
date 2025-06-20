@@ -19,7 +19,7 @@ export const services: Service[] = [
     ],
   },
   {
-    title: 'Process & Workflow Optimization',
+    title: 'Process & Workflow Optimisation',
     description:
       'As-is Process Mapping & Future-State Redesign. Model existing workflows, identify inefficiencies, and design streamlined, high-impact processes using techniques like value‑stream mapping',
     slug: 'process-optimization',

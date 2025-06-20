@@ -14,15 +14,6 @@ export async function generateStaticParams() {
 export const revalidate = 3600;
 
 export default function Mentoring() {
-  const headerContent = (
-    <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
-      Mentoring and Capability Building are at the heart of Bright Lambs' approach. We recognise
-      that developing skilled business analysts is not a one-off event but a continual journey of
-      growth, guided by structured support, shared learning, and community. Central to this is our
-      Business Analysis Academy (BAA.ac).
-    </p>
-  );
-
   const content = [
     <div key="section1">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">
@@ -177,19 +168,32 @@ export default function Mentoring() {
     </div>,
   ];
 
-  // Verify this is the correct service
-  const service = services.find((s) => s.slug === 'mentoring');
+  // Get all services and current service index
+  const currentServiceIndex = services.findIndex((s) => s.slug === 'mentoring');
+  const currentService = services[currentServiceIndex];
+  const prevService = currentServiceIndex > 0 ? {
+    title: services[currentServiceIndex - 1].title,
+    href: `/services/${services[currentServiceIndex - 1].slug}`
+  } : undefined;
+  const nextService = currentServiceIndex < services.length - 1 ? {
+    title: services[currentServiceIndex + 1].title,
+    href: `/services/${services[currentServiceIndex + 1].slug}`
+  } : undefined;
 
-  if (!service) {
+  if (!currentService) {
     notFound();
   }
 
   return (
     <ServiceDetail
       title="Mentoring & Capability Building"
-      headerContent={headerContent}
+      description="Mentoring and Capability Building are at the heart of Bright Lambs' approach. We recognise that developing skilled business analysts is not a one-off event but a continual journey of growth, guided by structured support, shared learning, and community. Central to this is our Business Analysis Academy (BAA.ac)."
       content={content}
-      imageUrl="/images/mentoring.jpg"
+      imageUrl="/images/services/mentoring.jpg"
+      showBackButton={false}
+      showBackButtonRight={true}
+      prevService={prevService}
+      nextService={nextService}
     />
   );
 }
