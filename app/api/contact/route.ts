@@ -75,7 +75,7 @@ export async function POST(request: Request) {
       secure: process.env.SMTP_SECURE === 'true',
       auth: {
         user: process.env.SMTP_USER || testAccount?.user,
-        pass: process.env.SMTP_PASSWORD || testAccount?.pass,
+        pass: process.env.SMTP_PASS || testAccount?.pass,  // Changed from SMTP_PASSWORD to SMTP_PASS
       },
     });
 
