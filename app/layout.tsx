@@ -28,9 +28,32 @@ export const metadata: Metadata = {
   },
 };
 
+// This script runs before React hydrates the page to prevent theme flicker
+const themeScript = `
+  (function() {
+    // Get the stored theme or use system preference
+    const storedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Determine the initial theme
+    let theme = 'light';
+    if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
+      theme = 'dark';
+    }
+    
+    // Apply the theme immediately
+    document.documentElement.classList.add(theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.className} ${baloo2.className}`}>
+      <head>
+        {/* Prevent FOUC by setting theme before hydration */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="flex min-h-screen flex-col bg-background text-foreground antialiased">
         <ThemeProvider>
           <TooltipProvider>

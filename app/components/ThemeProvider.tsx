@@ -59,6 +59,22 @@ function ThemeWatcher() {
 }
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  // Prevent hydration mismatch by using the same theme on server and client
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't render until we're on the client to avoid hydration mismatch
+  if (!mounted) {
+    return (
+      <div className="invisible">
+        {children}
+      </div>
+    );
+  }
+
   return (
     <NextThemesProvider
       attribute="class"

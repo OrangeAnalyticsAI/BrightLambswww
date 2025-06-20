@@ -31,7 +31,7 @@ interface ServiceDetailProps {
 }
 
 // Recursive function to add dark mode classes to all text elements
-const addDarkModeClasses = (element: ReactElement, isDark: boolean): ReactElement => {
+const addDarkModeClasses = (element: ReactElement): ReactElement => {
   if (!isValidElement<any>(element)) return element;
 
   // Skip if it's a custom component (not a DOM element)
@@ -40,23 +40,24 @@ const addDarkModeClasses = (element: ReactElement, isDark: boolean): ReactElemen
   // Clone the element with its props
   const newProps: Record<string, any> = { ...element.props };
 
-  // Handle className
+  // Handle className - don't modify existing classes, just ensure dark: variants are present
   const baseClasses = newProps.className ? String(newProps.className).split(' ') : [];
-
-  // Remove any existing text color classes
-  const filteredClasses = baseClasses.filter(
-    (cls: string) => !cls.startsWith('text-') || cls === 'text-white' || cls === 'text-black'
+  
+  // If there are no text color classes, add default ones
+  const hasTextColor = baseClasses.some((cls: string) => 
+    cls.startsWith('text-') && !cls.startsWith('text-opacity-')
   );
-
-  // Add appropriate text color class if this is a text element
+  
   const textElements = ['p', 'span', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'a'];
-  if (typeof element.type === 'string' && textElements.includes(element.type)) {
-    filteredClasses.push(isDark ? 'text-gray-200' : 'text-gray-700');
+  if (!hasTextColor && typeof element.type === 'string' && textElements.includes(element.type)) {
+    baseClasses.push('text-gray-700', 'dark:text-gray-200');
   }
 
-  // Apply the filtered classes
-  if (filteredClasses.length > 0) {
-    newProps.className = filteredClasses.join(' ');
+  // Apply the classes if we modified them
+  if (baseClasses.length > 0) {
+    // Remove duplicates by converting to Set and back to array
+    const uniqueClasses = Array.from(new Set(baseClasses));
+    newProps.className = uniqueClasses.join(' ');
   } else {
     delete newProps.className;
   }
@@ -65,7 +66,7 @@ const addDarkModeClasses = (element: ReactElement, isDark: boolean): ReactElemen
   if (newProps.children) {
     newProps.children = Children.map(newProps.children, (child) => {
       if (isValidElement(child)) {
-        return addDarkModeClasses(child, isDark);
+        return addDarkModeClasses(child);
       }
       return child;
     });
@@ -97,7 +98,7 @@ export default function ServiceDetail({
       if (!isValidElement(section)) return section;
 
       // Process the section with dark mode classes
-      const processedSection = addDarkModeClasses(section, isDark);
+      const processedSection = addDarkModeClasses(section);
 
       // Return the processed section in a wrapper div
       return (
@@ -106,20 +107,16 @@ export default function ServiceDetail({
         </div>
       );
     });
-  }, [content, isDark]);
+  }, [content]);
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 ${
-        isDark ? 'bg-gray-900 text-gray-100' : 'bg-white text-gray-900'
-      }`}
-    >
+    <div className="min-h-screen transition-colors duration-300 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="relative">
           <div className="bg-indigo-700 px-6 pb-8 pt-12 sm:px-12">
             <h1 className="text-center text-4xl font-bold text-white">{title}</h1>
-            <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white">
+            <p className="mx-auto mt-4 max-w-4xl text-center text-lg text-white dark:text-gray-200">
               {description}
             </p>
             
@@ -232,11 +229,9 @@ export default function ServiceDetail({
               <div className="relative">
                 {/* Desktop image - floats right */}
                 <div className="hidden lg:block float-right ml-8 mb-6 w-1/2 max-w-2xl">
-                  <div
-                    className={`rounded-lg p-4 transition-colors duration-300 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}
-                  >
+                  <div className="rounded-lg p-4 transition-colors duration-300 bg-gray-100 dark:bg-gray-700">
                     <div
-                      className={`aspect-w-4 aspect-h-3 w-full overflow-hidden rounded-lg transition-colors duration-300 ${isDark ? 'bg-gray-600' : 'bg-gray-200'}`}
+                      className="aspect-w-4 aspect-h-3 w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-600 transition-colors duration-300"
                     >
                       <Image
                         src={imageUrl}
@@ -251,7 +246,16 @@ export default function ServiceDetail({
                 </div>
                 
                 {/* Content that wraps around the image */}
-                <div className="prose max-w-4xl lg:prose-lg">
+                <div className="prose max-w-4xl lg:prose-lg text-gray-700 dark:prose-invert dark:text-gray-200">
+                  {/* Add dark mode styles for all prose elements */}
+                  <style jsx global>{`
+                    .prose :where(p, li, h1, h2, h3, h4, h5, h6, strong, em):not(:where([class~='not-prose'] *)) {
+                      color: inherit;
+                    }
+                    .dark .prose :where(p, li, h1, h2, h3, h4, h5, h6, strong, em):not(:where([class~='not-prose'] *)) {
+                      color: #e5e7eb; /* gray-200 */
+                    }
+                  `}</style>
                   {processedContent}
                 </div>
                 
@@ -261,11 +265,9 @@ export default function ServiceDetail({
 
               {/* Mobile image - only shown on mobile */}
               <div className="mt-8 lg:hidden">
-                <div
-                  className={`rounded-lg p-4 transition-colors duration-300 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}
-                >
+                <div className="rounded-lg p-4 transition-colors duration-300 bg-gray-100 dark:bg-gray-700">
                   <div
-                    className={`aspect-w-4 aspect-h-3 w-full overflow-hidden rounded-lg transition-colors duration-300 ${isDark ? 'bg-gray-600' : 'bg-gray-200'}`}
+                    className="aspect-w-4 aspect-h-3 w-full overflow-hidden rounded-lg bg-gray-200 dark:bg-gray-600 transition-colors duration-300"
                   >
                     <Image
                       src={imageUrl}
