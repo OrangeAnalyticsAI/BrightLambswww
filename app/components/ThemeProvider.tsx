@@ -1,91 +1,36 @@
 'use client';
 
-import { ThemeProvider as NextThemesProvider, useTheme as useNextTheme } from 'next-themes';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import type { ThemeProviderProps } from 'next-themes';
 import { useEffect, useState } from 'react';
 
-type ThemeProviderProps = {
-  children: React.ReactNode;
-  [key: string]: any;
-};
-
-// Helper component to handle system theme changes
-function ThemeWatcher() {
-  const { theme, setTheme, resolvedTheme } = useNextTheme();
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted state after component mounts (client-side only)
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Handle theme changes and system preference
-  useEffect(() => {
-    if (!mounted) return;
-
-    const root = window.document.documentElement;
-
-    // Remove all theme classes first
-    root.classList.remove('light', 'dark');
-
-    // Add the current theme class
-    if (resolvedTheme) {
-      root.classList.add(resolvedTheme);
-      root.setAttribute('data-theme', resolvedTheme);
-    }
-
-    // Handle system preference changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    const handleSystemThemeChange = () => {
-      if (theme === 'system') {
-        const systemTheme = mediaQuery.matches ? 'dark' : 'light';
-        root.classList.remove('light', 'dark');
-        root.classList.add(systemTheme);
-        root.setAttribute('data-theme', systemTheme);
-      }
-    };
-
-    mediaQuery.addEventListener('change', handleSystemThemeChange);
-
-    // Initial setup
-    handleSystemThemeChange();
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleSystemThemeChange);
-    };
-  }, [theme, resolvedTheme, mounted]);
-
-  return null;
-}
-
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  // Prevent hydration mismatch by using the same theme on server and client
   const [mounted, setMounted] = useState(false);
-  
+
+  // After mounting, we have access to the theme
   useEffect(() => {
     setMounted(true);
+    
+    // Remove any server-side injected styles
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement?.removeChild(jssStyles);
+    }
   }, []);
 
-  // Don't render until we're on the client to avoid hydration mismatch
+  // Prevent hydration mismatch by rendering a placeholder until mounted
   if (!mounted) {
-    return (
-      <div className="invisible">
-        {children}
-      </div>
-    );
+    return <div style={{ visibility: 'hidden' }}>{children}</div>;
   }
 
   return (
     <NextThemesProvider
       attribute="class"
       defaultTheme="system"
-      enableSystem={true}
-      storageKey="theme"
+      enableSystem
       disableTransitionOnChange
-      themes={['light', 'dark', 'system']}
       {...props}
     >
-      <ThemeWatcher />
       {children}
     </NextThemesProvider>
   );

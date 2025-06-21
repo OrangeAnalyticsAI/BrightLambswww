@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Mail, MapPin, Calendar, Send, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
+import MainLayout from '../components/MainLayout';
 
 type FormData = {
   name: string;
@@ -19,7 +20,7 @@ type FormErrors = {
   message?: string;
 };
 
-export default function ContactPage() {
+function ContactPageContent() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -187,7 +188,7 @@ export default function ContactPage() {
     <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 py-20 dark:from-gray-800 dark:via-gray-800 dark:to-gray-900">
+        <section className="bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 py-12 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20">
           <div className="container mx-auto px-6 text-center">
             <h1 className="mb-6 text-4xl font-bold text-gray-800 dark:text-gray-100 md:text-5xl">
               Contact Us
@@ -238,7 +239,7 @@ export default function ContactPage() {
                           Schedule a Consultation
                         </h3>
                         <p className="mb-2 text-gray-600 dark:text-gray-400">
-                          Book a call with our team to discuss your needs
+                          Book a call with our team to discuss your needs.
                         </p>
                         <a
                           href="https://calendly.com/jen-brightlambs/30min"
@@ -399,7 +400,7 @@ export default function ContactPage() {
                             ? 'border-red-500'
                             : 'border-gray-300 dark:border-gray-600'
                         } bg-white text-gray-900 dark:bg-gray-700 dark:text-white`}
-                        placeholder="What's this about?"
+                        placeholder="What would you like to ask us?"
                       />
                       {formErrors.subject && (
                         <p className="mt-1 text-sm text-red-600 dark:text-red-400">
@@ -480,5 +481,13 @@ export default function ContactPage() {
         </section>
       </main>
     </div>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <MainLayout>
+      <ContactPageContent />
+    </MainLayout>
   );
 }

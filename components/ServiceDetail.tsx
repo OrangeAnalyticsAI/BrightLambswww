@@ -1,6 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 import React, { ReactNode, ReactElement, useMemo, Children, isValidElement, cloneElement } from 'react';
 import { useTheme } from 'next-themes';
 
@@ -110,7 +113,7 @@ export default function ServiceDetail({
   }, [content]);
 
   return (
-    <div className="min-h-screen transition-colors duration-300 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
+    <div className="min-h-screen bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="relative">
@@ -125,7 +128,7 @@ export default function ServiceDetail({
               {/* Left side buttons */}
               <div>
                 {showBackButton ? (
-                  <a
+                  <Link
                     href="/services"
                     className="ml-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20 sm:ml-12"
                   >
@@ -144,11 +147,12 @@ export default function ServiceDetail({
                       />
                     </svg>
                     Back to Services Overview
-                  </a>
+                  </Link>
                 ) : prevService ? (
-                  <a
+                  <Link
                     href={prevService.href}
                     className="ml-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20 sm:ml-12"
+                    scroll={false}
                   >
                     <svg
                       className="mr-2 h-4 w-4"
@@ -165,7 +169,7 @@ export default function ServiceDetail({
                       />
                     </svg>
                     {prevService.title}
-                  </a>
+                  </Link>
                 ) : <div className="ml-6 sm:ml-12" />}
                 
 
@@ -174,9 +178,10 @@ export default function ServiceDetail({
               {/* Right side buttons */}
               <div className="flex items-center">
                 {nextService && (
-                  <a
+                  <Link
                     href={nextService.href}
                     className="inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20"
+                    scroll={false}
                   >
                     {nextService.title}
                     <svg
@@ -193,14 +198,15 @@ export default function ServiceDetail({
                         d="M9 5l7 7-7 7"
                       />
                     </svg>
-                  </a>
+                  </Link>
                 )}
                 {/* Invisible spacer to force space between buttons */}
                 <div className="w-2 sm:w-4 h-1 bg-indigo-700 mx-1 sm:mx-2" aria-hidden="true"></div>
                 {showBackButtonRight && (
-                  <a
+                  <Link
                     href="/services"
                     className="mr-6 inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white transition hover:bg-white/20 sm:mr-12"
+                    scroll={false}
                   >
                     Back to Services Overview
                     <svg
@@ -217,7 +223,7 @@ export default function ServiceDetail({
                         d="M14 5l7 7m0 0l-7 7m7-7H3"
                       />
                     </svg>
-                  </a>
+                  </Link>
                 )}
               </div>
             </div>

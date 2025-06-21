@@ -9,7 +9,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        baloo2: ['Baloo 2', 'sans-serif'],
+        sans: ['var(--font-inter)', 'sans-serif'],
+        baloo2: ['var(--font-baloo2)', 'sans-serif'],
+      },
+      transitionProperty: {
+        'height': 'height',
+        'spacing': 'margin, padding',
+      },
+      transitionTimingFunction: {
+        'in-out-quart': 'cubic-bezier(0.76, 0, 0.24, 1)',
       },
       colors: {
         // Base colors
@@ -67,6 +75,25 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      transitionDuration: {
+        DEFAULT: '300ms',
+        0: '0ms',
+        100: '100ms',
+        200: '200ms',
+        300: '300ms',
+        500: '500ms',
+        700: '700ms',
+        1000: '1000ms',
+      },
+      transitionDelay: {
+        DEFAULT: '0ms',
+        100: '100ms',
+        200: '200ms',
+        300: '300ms',
+        500: '500ms',
+        700: '700ms',
+        1000: '1000ms',
       },
     },
   },

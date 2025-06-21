@@ -14,16 +14,9 @@ export function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return (
-      <div className="group relative">
-        <div className="absolute -inset-0.5 overflow-hidden rounded-lg">
-          <div className="animate-gradient-rotate absolute inset-0 bg-gradient-to-r from-pink-600 via-purple-500 to-blue-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-        </div>
-        <button className="relative rounded-md bg-transparent p-2 focus:outline-none">
-          <div className="h-5 w-5" />
-        </button>
-      </div>
-    );
+    // Return a placeholder or null to avoid rendering on the server and causing a hydration mismatch.
+    // A div with the same dimensions as the button can prevent layout shift.
+    return <div className="h-8 w-8 p-1" />;
   }
 
   return (

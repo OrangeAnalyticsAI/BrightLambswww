@@ -81,7 +81,7 @@ export default function Navigation() {
           <div className="flex items-center space-x-2">
             <nav className="hidden md:flex md:items-center md:space-x-2">
               <ThemeToggle />
-              {navLinks.map((link) =>
+                            {navLinks.map((link) =>
                 link.external ? (
                   <div className="group relative" key={link.href}>
                     <div className="absolute -inset-0.5 overflow-hidden rounded-lg">
