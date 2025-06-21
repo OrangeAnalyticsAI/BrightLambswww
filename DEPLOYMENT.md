@@ -1,4 +1,4 @@
-# Deployment Guide for Business Analysis Academy
+# Deployment Guide for Bright Lambs
 
 This guide explains how to deploy the Business Analysis Academy application using Docker and Render, with support for multiple environments (development and production).
 
@@ -15,12 +15,12 @@ This guide explains how to deploy the Business Analysis Academy application usin
 The project is configured with two main environments:
 
 1. **Development (`dev` branch)**
-   - Deployed as `BAA-Dev` service on Render
+   - Deployed as `BrightLambs-Dev` service on Render
    - Uses development Supabase instance
    - Auto-deploys on push to `dev` branch
 
 2. **Production (`main` branch)**
-   - Deployed as `BAA` service on Render
+   - Deployed as `BrightLambs` service on Render
    - Uses production Supabase instance
    - Auto-deploys on push to `main` branch
 
@@ -28,12 +28,12 @@ The project is configured with two main environments:
 
 1. Build the Docker image:
    ```bash
-   docker build -t baa-app .
+   docker build -t brightlambs-app .
    ```
 
 2. Run the container:
    ```bash
-   docker run -p 3000:3000 --env-file .env.development baa-app
+   docker run -p 3000:3000 --env-file .env.development brightlambs-app
    ```
 
 3. Open [http://localhost:3000](http://localhost:3000) in your browser.
@@ -56,13 +56,13 @@ The project uses Render's Blueprint feature with `render.yaml` for infrastructur
 
 Environment variables are managed through the `render.yaml` file. The following variables are required:
 
-#### Development (BAA-Dev):
+#### Development (BrightLambs-Dev):
 - `NODE_ENV=development`
 - `PORT=3000`
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-#### Production (BAA):
+#### Production (BrightLambs):
 - `NODE_ENV=production`
 - `PORT=3000`
 - `NEXT_PUBLIC_SUPABASE_URL`
@@ -72,13 +72,13 @@ Environment variables are managed through the `render.yaml` file. The following 
 
 #### Development Deployment:
 1. Push changes to the `dev` branch
-2. Render will automatically detect changes and deploy to `BAA-Dev`
+2. Render will automatically detect changes and deploy to `BrightLambs-Dev`
 3. Monitor the deployment in the Render dashboard
 
 #### Production Deployment:
 1. Merge changes from `dev` to `main` branch
 2. Push the `main` branch
-3. Render will automatically deploy to `BAA` production service
+3. Render will automatically deploy to `BrightLambs` production service
 
 ## Local Development Setup
 

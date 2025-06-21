@@ -253,13 +253,10 @@ export default function ServiceDetail({
                 
                 {/* Content that wraps around the image */}
                 <div className="prose max-w-4xl lg:prose-lg text-gray-700 dark:prose-invert dark:text-gray-200">
-                  {/* Add dark mode styles for all prose elements */}
+                  {/* Remove custom color overrides to use theme colors */}
                   <style jsx global>{`
                     .prose :where(p, li, h1, h2, h3, h4, h5, h6, strong, em):not(:where([class~='not-prose'] *)) {
                       color: inherit;
-                    }
-                    .dark .prose :where(p, li, h1, h2, h3, h4, h5, h6, strong, em):not(:where([class~='not-prose'] *)) {
-                      color: #e5e7eb; /* gray-200 */
                     }
                   `}</style>
                   {processedContent}

@@ -59,10 +59,9 @@ export default function PrivacyPolicyPage() {
 
           <h3 className="mb-3 mt-6 text-xl font-semibold">b) Website Visitors</h3>
           <ul className="mb-6 list-disc space-y-2 pl-6">
-            <li>Contact form submissions</li>
-            <li>IP address</li>
-            <li>Browser type and device data</li>
-            <li>Website usage statistics (via cookies or analytics tools)</li>
+            <li><strong>Contact Form Submissions:</strong> When you use our contact form, we collect your name, email address, and message. This information is stored securely in our database to enable us to respond to your inquiry and is retained for 12 months.</li>
+            <li><strong>Website Visit Logs:</strong> To help us improve our website and understand user engagement, we log visits from what we believe to be genuine human users. To do this, we ignore requests from known automated bots and crawlers. A visit is only recorded if you remain on a page for a short period (currently 5 seconds). The log includes the page you visited, your browser type (user agent), and an anonymized version of your IP address. We ensure the last part of your IP address is removed before storage to protect your privacy.</li>
+            <li><strong>Cookies and Analytics:</strong> We may use cookies to enhance user experience and analyse usage. You can control cookie settings via your browser.</li>
           </ul>
 
           <h3 className="mb-3 mt-6 text-xl font-semibold">c) Newsletter Subscribers</h3>
@@ -130,7 +129,7 @@ export default function PrivacyPolicyPage() {
           <p className="mb-4">We retain personal data only for as long as necessary:</p>
           <ul className="mb-6 list-disc space-y-2 pl-6">
             <li>Client project data: 7 years (for legal/accounting purposes)</li>
-            <li>Website contact form submissions: 12 months</li>
+            
             <li>Mailing list subscriptions: until unsubscribed</li>
           </ul>
 

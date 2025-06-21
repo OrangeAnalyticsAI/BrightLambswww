@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-pink-50 to-blue-50 p-4">
       <div className="w-full max-w-2xl space-y-6 rounded-2xl bg-white p-8 text-center shadow-xl">
-        <h2 className="text-3xl font-bold text-gray-800">Baa-d News!</h2>
+        <h2 className="text-3xl font-bold text-gray-800">Baa-d News! 🐑</h2>
         <div className="my-4 flex justify-center">
           <div className="relative h-[19.2rem] w-[19.2rem]">
             <Image

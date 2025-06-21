@@ -6,7 +6,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-console.log('Welcome to BAA Setup!');
+console.log('Welcome to Bright Lambs Setup!');
 console.log('Please enter your Supabase credentials:');
 
 rl.question('Supabase URL: ', (url) => {

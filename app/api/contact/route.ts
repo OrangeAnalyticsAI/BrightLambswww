@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { z } from 'zod';
 
+
 // Rate limiting setup
 const rateLimit = new Map<string, { count: number; lastReset: number }>();
 const RATE_LIMIT = {
@@ -162,30 +163,15 @@ This email was sent from the contact form on BrightLambs website.`,
     // Send email
     const info = await transporter.sendMail(mailOptions);
 
-    // Log the preview URL in development
-    if (isDevelopment) {
-      const previewUrl = nodemailer.getTestMessageUrl(info);
-      if (previewUrl) {
-        console.log('Preview URL:', previewUrl);
-      }
-    }
+    const response = {
+      success: true,
+      message: 'Message sent successfully!',
+      previewUrl: isDevelopment ? nodemailer.getTestMessageUrl(info) : undefined
+    } as const;
 
-    return NextResponse.json(
-      {
-        success: true,
-        message: 'Message sent successfully!',
-        previewUrl: isDevelopment ? nodemailer.getTestMessageUrl(info) : undefined,
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    // Log detailed error in server logs but don't expose details to client
-    console.error('Error processing contact form:', {
-      error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      timestamp: new Date().toISOString(),
-    });
-
+    return NextResponse.json(response, { status: 200 });
+  } catch (e) {
+    console.error('Error in contact submission:', e);
     return NextResponse.json(
       {
         success: false,

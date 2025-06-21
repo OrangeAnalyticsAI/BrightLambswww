@@ -15,6 +15,10 @@ export function createClient() {
     throw new Error('NEXT_PUBLIC_SUPABASE_ANON_KEY is not defined');
   }
 
+  console.log('Creating Supabase client with URL:', 
+    process.env.NEXT_PUBLIC_SUPABASE_URL);
+  console.log('Using environment:', process.env.NODE_ENV);
+
   // Check if we already have a client instance
   if (typeof window !== 'undefined' && window.__supabase) {
     console.log('Using existing Supabase client instance');

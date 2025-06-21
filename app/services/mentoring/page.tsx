@@ -17,15 +17,22 @@ export default function Mentoring() {
   const content = [
     <div key="section1">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">
-        1. Establishing a Foundation: BAA.ac as Our Core Platform
+        1. Establishing a Foundation: Our Academy as Our Core Platform
       </h2>
       <p className="mb-4 text-gray-700">
-        Our in-house Business Analysis Academy (BAA.ac) serves as both a training repository and
-        community hub.
+        Our in-house Business Analysis Academy (
+        <a 
+          href="https://baa.ac" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline"
+        >
+          BAA.ac
+        </a>) serves as both a training repository and community hub.
       </p>
       <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
         <li>
-          For Bright Lambs staff, BAA.ac is the base for structured onboarding, continuous
+          For Bright Lambs staff, our Academy platform is the base for structured onboarding, continuous
           development modules, and access to evolving content across BA competencies.
         </li>
         <li>
@@ -62,7 +69,7 @@ export default function Mentoring() {
     <div key="section3">
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">3. Structured Learning Pathways</h2>
       <p className="mb-4 text-gray-700">
-        BAA.ac's content is organised into well-defined learning tracks, aligned with BABOK®
+        Our Academy's content is organised into well-defined learning tracks, aligned with BABOK®
         knowledge areas, industry best practice, and Bright Lambs' own frameworks. Courses feature:
       </p>
       <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
@@ -82,7 +89,7 @@ export default function Mentoring() {
         4. Peer-to-Peer Growth & Community
       </h2>
       <p className="mb-4 text-gray-700">
-        The peer dimension is vital. Through BAA.ac and internal sessions, we host:
+        The peer dimension is vital. Through our Academy platform and internal sessions, we host:
       </p>
       <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
         <li>
@@ -106,7 +113,7 @@ export default function Mentoring() {
       <h2 className="mb-3 text-2xl font-semibold text-gray-900">
         5. Managing Capability Growth & Impact
       </h2>
-      <p className="mb-4 text-gray-700">We track individual progress via BAA.ac analytics:</p>
+      <p className="mb-4 text-gray-700">We track individual progress via our Academy analytics:</p>
       <ul className="mb-4 list-disc space-y-2 pl-6 text-gray-700">
         <li>Course completions</li>
         <li>Micro-credential achievements</li>
@@ -128,7 +135,7 @@ export default function Mentoring() {
         6. Embedding Capability into Delivery
       </h2>
       <p className="mb-6 text-gray-700">
-        The ultimate goal is better client delivery. Analysts who train on BAA.ac and benefit from
+        The ultimate goal is better client delivery. Analysts who train with us and benefit from
         mentoring are more confident, resilient, and ready to lead:
       </p>
       <ul className="mb-6 list-disc space-y-2 pl-6 text-gray-700">
@@ -145,7 +152,7 @@ export default function Mentoring() {
           something that can simply be inherited.
         </li>
         <li>
-          <span className="font-medium">It sets high standards:</span> With BAA.ac as our "gold
+          <span className="font-medium">It sets high standards:</span> With our Academy as our "gold
           standard", every analyst works within the same framework, delivering reliable quality.
         </li>
         <li>
@@ -162,7 +169,7 @@ export default function Mentoring() {
 
       <p className="mt-6 text-lg text-gray-700">
         At Bright Lambs, mentoring and capability building are not just nice to have, they are
-        mission-critical. Through structured mentorship, shared learning via BAA.ac, and a
+        mission-critical. Through structured mentorship, shared learning via our Academy, and a
         supportive community, we unleash the human potential behind every transformation.
       </p>
     </div>,

@@ -80,3 +80,22 @@
 *, *::before, *::after {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
+
+/* Custom prose styles for dark mode */
+.dark .prose {
+  color: #e5e7eb; /* gray-200 */
+}
+
+.dark .prose :where(p, li, h1, h2, h3, h4, h5, h6, strong, em):not(:where([class~='not-prose'] *)) {
+  color: inherit;
+}
+
+/* Ensure links are visible in dark mode */
+.dark .prose a {
+  color: #93c5fd; /* blue-300 */
+}
+
+.dark .prose a:hover {
+  color: #60a5fa; /* blue-400 */
+  text-decoration: underline;
+}

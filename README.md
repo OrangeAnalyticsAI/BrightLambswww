@@ -1,7 +1,4 @@
-> **Deprecation Notice**
-> The `trusted-business-advisors` directory is deprecated and will be removed soon. Please do not make any changes to this directory as it will be deleted in an upcoming update.
-
-# Business Analysis Academy
+# Bright Lambs
 
 A modern web application for the Business Analysis Academy, built with Next.js, React, and Supabase. The aim of the application is to host courses and resources as well as information on Tools for business analysis professionals. Users will be able to view the what courses and resources are available, but to be able to view and download them then they will have to register and login. The exception is publically available resources, like YouTube videos or links to other websites, which they can follow without registering.
 
@@ -38,8 +35,8 @@ User registration will involve them completing a questionnaire to help us unders
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/OrangeAnalyticsAI/BAA.git
-   cd BAA
+   git clone https://github.com/OrangeAnalyticsAI/BrightLambswww.git
+   cd BrightLambswww
    ```
 
 2. Install dependencies:

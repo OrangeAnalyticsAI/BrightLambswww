@@ -1,6 +1,6 @@
 # Database Schema Documentation
 
-This file documents the current schema of the Supabase database for the BAA (Business Analysis Academy) project.
+This file documents the current schema of the Supabase database for the Bright Lambs project.
 
 ## Last Updated
 2025-05-31 23:24:53 UTC

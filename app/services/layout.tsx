@@ -10,7 +10,7 @@ export default function ServicesLayout({
   const { theme } = useTheme();
   
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
+    <div suppressHydrationWarning className={`min-h-screen ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
       {children}
     </div>
   );

@@ -58,11 +58,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
-  // Enable environment variable loading from .env.local, .env.development, .env.production, .env.test
-  env: {
-    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  },
+  // Environment variables are loaded automatically from .env files
+  // No need to manually specify them here as it can cause issues with Next.js environment handling
 };
 
 // Debug configuration

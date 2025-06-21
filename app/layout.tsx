@@ -8,6 +8,7 @@ import PageTransitionIndicator from '@/app/components/PageTransitionIndicator';
 import { Inter, Baloo_2 } from 'next/font/google';
 
 import { ClientProviders } from '@/app/components/ClientProviders';
+import { VisitLogger } from '@/components/analytics/VisitLogger';
 
 export { metadata } from './metadata';
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
             <body className={`${inter.variable} ${baloo2.variable} font-sans antialiased`}>
         <ClientProviders>
+          <VisitLogger />
           <TooltipProvider>
             <PageTransitionIndicator />
             <Logo />

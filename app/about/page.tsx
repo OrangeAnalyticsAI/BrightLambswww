@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Users, BarChart, Lightbulb, Target, Award, Briefcase } from 'lucide-react';
 import Image from 'next/image';
-import MainLayout from '../components/MainLayout';
+import MainLayout from '@/app/components/MainLayout';
 
 const FeatureCard = ({
   title,
@@ -21,12 +21,13 @@ const FeatureCard = ({
   </div>
 );
 
-function AboutPageContent() {
+export default function AboutPage() {
   return (
-    <div className="flex flex-col">
-      <main className="flex-grow">
+    <MainLayout>
+      <div className="flex flex-col">
+        <main className="flex-grow">
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 py-12 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20">
+        <section className="py-12 bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 dark:from-blue-900/20 dark:via-purple-900/20 dark:to-indigo-900/20">
           <div className="container mx-auto px-6 text-center">
             <h1 className="mb-4 text-3xl font-bold text-black dark:text-white md:text-4xl">
               About{' '}
@@ -299,15 +300,8 @@ function AboutPageContent() {
             </Link>
           </div>
         </section>
-      </main>
-    </div>
-  );
-}
-
-export default function AboutPage() {
-  return (
-    <MainLayout>
-      <AboutPageContent />
+        </main>
+      </div>
     </MainLayout>
   );
 }
