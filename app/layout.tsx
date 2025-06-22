@@ -24,9 +24,17 @@ const baloo2 = Baloo_2({
   variable: '--font-baloo2',
 });
 
+// Force static rendering to prevent hydration mismatch
+// This helps prevent the flash of unstyled content
+export const dynamic = 'force-static';
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html 
+      lang="en" 
+      suppressHydrationWarning
+      className="light" // Default light theme
+    >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, minimal-ui" key="viewport" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" key="theme-color-light" />
