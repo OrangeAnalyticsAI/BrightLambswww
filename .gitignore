@@ -1,11 +1,32 @@
-node_modules
+# Dependencies
+node_modules/
+
+# Environment files
 .env
-.env.local
-.env.*.local
-.next
-out
+.env.*
+!.env.example
+!.env.local.example
+!.env.development
+!.env.production
+!.env.local
+
+# Build output
+.next/
+out/
+
+# System files
 .DS_Store
 *.pem
+
+# Logs
 yarn-debug.log*
 yarn-error.log*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local development
 windsurf-supabase-mcp/
