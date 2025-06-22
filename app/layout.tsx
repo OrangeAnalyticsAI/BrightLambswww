@@ -27,14 +27,19 @@ const baloo2 = Baloo_2({
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-            <body className={`${inter.variable} ${baloo2.variable} font-sans antialiased`}>
+      <head>
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" key="theme-color-light" />
+        <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" key="theme-color-dark" />
+        <meta name="color-scheme" content="light dark" key="color-scheme" />
+      </head>
+      <body className={`${inter.variable} ${baloo2.variable} font-sans antialiased bg-background text-foreground`}>
         <ClientProviders>
           <VisitLogger />
           <TooltipProvider>
             <PageTransitionIndicator />
             <Logo />
             <Navigation />
-            <main className="min-h-screen">{children}</main>
+            <main className="min-h-[100dvh] relative">{children}</main>
             <Footer />
             <Toaster />
           </TooltipProvider>
