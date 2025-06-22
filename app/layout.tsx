@@ -28,9 +28,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, minimal-ui" key="viewport" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" key="theme-color-light" />
         <meta name="theme-color" content="#111827" media="(prefers-color-scheme: dark)" key="theme-color-dark" />
         <meta name="color-scheme" content="light dark" key="color-scheme" />
+        
+        {/* Safari specific */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Bright Lambs" />
+        <meta name="format-detection" content="telephone=no" />
+        
+        {/* PWA */}
+        <meta name="mobile-web-app-capable" content="yes" />
+        <link rel="apple-touch-startup-image" href="/splash.png" />
       </head>
       <body className={`${inter.variable} ${baloo2.variable} font-sans antialiased bg-background text-foreground`}>
         <ClientProviders>

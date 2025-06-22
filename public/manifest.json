@@ -2,11 +2,18 @@
   "name": "Bright Lambs",
   "short_name": "BrightLambs",
   "description": "Business Analysis as a Service (BAaaS)",
-  "start_url": "/?source=pwa",
+  "start_url": "/?source=pwa&homescreen=1",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "prefer_related_applications": false,
+  "display_override": ["window-controls-overlay"],
+  "categories": ["business", "productivity"],
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
+  "screenshots": [],
   "icons": [
     {
       "src": "/favicon.png",
@@ -21,7 +28,5 @@
       "purpose": "any maskable"
     }
   ],
-  "screenshots": [],
-  "categories": ["business", "productivity"],
-  "orientation": "portrait"
+  "screenshots": []
 }
