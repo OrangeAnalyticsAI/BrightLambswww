@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   },
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f172a' },
+    { media: '(prefers-color-scheme: dark)', color: '#111827' },
   ],
   viewport: {
     width: 'device-width',
@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   other: {
     'mobile-web-app-capable': 'yes',
     'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'default',
+    'apple-mobile-web-app-status-bar-style': 'black-translucent',
+    'msapplication-navbutton-color': '#111827',
+    'msapplication-TileColor': '#111827',
   },
+  manifest: '/manifest.json',
 };
