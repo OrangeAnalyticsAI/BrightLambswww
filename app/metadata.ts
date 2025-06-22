@@ -28,7 +28,8 @@ export const metadata: Metadata = {
     ],
     shortcut: '/favicon.ico',
     apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180' },
+      { url: '/icon-192.png', sizes: '192x192' },
+      { url: '/icon-192.png', sizes: '192x192', rel: 'apple-touch-icon-precomposed' },
     ],
   },
   manifest: '/manifest.json',

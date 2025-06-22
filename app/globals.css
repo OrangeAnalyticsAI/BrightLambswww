@@ -82,14 +82,10 @@
   }
 }
 
-/* Smooth transitions for theme changes */
-html {
-  transition: background-color 0.3s ease;
-}
-
-*, *::before, *::after {
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-}
+/*
+  Transitions removed to prevent flash of unstyled content on load.
+  The theme provider handles transitions more effectively.
+*/
 
 /* Custom prose styles for dark mode */
 .dark .prose {

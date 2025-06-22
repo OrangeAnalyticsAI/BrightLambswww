@@ -9,6 +9,7 @@ import { Inter, Baloo_2 } from 'next/font/google';
 
 import { ClientProviders } from '@/app/components/ClientProviders';
 import { VisitLogger } from '@/components/analytics/VisitLogger';
+import { SkipLink } from '@/app/components/SkipLink';
 
 export { metadata } from './metadata';
 
@@ -58,7 +59,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <PageTransitionIndicator />
             <Logo />
             <Navigation />
-            <main className="min-h-[100dvh] relative">{children}</main>
+            <main className="scroll-mt-16" id="main-content">
+              <SkipLink />
+              {children}
+            </main>
             <Footer />
             <Toaster />
           </TooltipProvider>
